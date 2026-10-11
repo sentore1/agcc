@@ -14,7 +14,7 @@ interface CourseCertificateProps {
   certificateTitle?: string;
   certificateSubtitle?: string;
   completionDate: string;       // ISO string
-  enrollmentDate?: string;      // ISO string — course start date
+  enrollmentDate?: string;      // ISO stringcourse start date
   certificateNumber: string;
   lessons: LessonModule[];
   finalScore?: number;
@@ -125,7 +125,7 @@ export default function CourseCertificate({
         {/* ── Overlay content ── */}
         <div className="absolute inset-0" style={{ fontFamily: 'Georgia, serif' }}>
 
-          {/* Certificate title overlay — two lines */}
+          {/* Certificate title overlaytwo lines */}
           {certificateTitle && (
             <div
               className="absolute text-center w-full"
@@ -153,7 +153,7 @@ export default function CourseCertificate({
             </div>
           )}
 
-          {/* Issued date — sits just below "This is to certify that" */}
+          {/* Issued datesits just below "This is to certify that" */}
           <div
             className="absolute text-center w-full"
             style={{ top: '20%', fontSize: 'clamp(8px, 1.3vw, 14px)', color: '#1a1a1a' }}
@@ -161,7 +161,7 @@ export default function CourseCertificate({
             {formattedCompletion}
           </div>
 
-          {/* "This certificate certifies that" — above the name */}
+          {/* "This certificate certifies that"above the name */}
           <div
             className="absolute text-center w-full"
             style={{
@@ -176,7 +176,7 @@ export default function CourseCertificate({
             This certificate certifies that
           </div>
 
-          {/* Student name — script font, moved below the dashed line */}
+          {/* Student namescript font, moved below the dashed line */}
           <div
             className="absolute text-center w-full"
             style={{
@@ -192,7 +192,7 @@ export default function CourseCertificate({
             {studentName}
           </div>
 
-          {/* "COMPLETED THE COURSE OF" — between name and course title */}
+          {/* "COMPLETED THE COURSE OF"between name and course title */}
           <div
             className="absolute text-center w-full"
             style={{
@@ -208,7 +208,7 @@ export default function CourseCertificate({
             Completed the Course of
           </div>
 
-          {/* Course title — short subtitle below the "completed" line */}
+          {/* Course titleshort subtitle below the "completed" line */}
           <div
             className="absolute text-center w-full"
             style={{
@@ -226,7 +226,7 @@ export default function CourseCertificate({
             {courseTitle}
           </div>
 
-          {/* Certificate subtitle — below the course title */}
+          {/* Certificate subtitlebelow the course title */}
           {certificateSubtitle && (
             <div
               className="absolute text-center w-full"

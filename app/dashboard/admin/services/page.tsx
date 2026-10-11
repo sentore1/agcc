@@ -12,20 +12,15 @@ interface ServiceType {
   name: string;
   description: string | null;
   icon: string | null;
-  price_per_hour: number | null;
   is_active: boolean;
-  display_order: number;
   created_at: string;
-  updated_at: string;
 }
 
 interface ServiceFormData {
   name: string;
   description: string;
   icon: string;
-  price_per_hour: string;
   is_active: boolean;
-  display_order: string;
 }
 
 export default function ServiceTypesManagement() {
@@ -37,9 +32,7 @@ export default function ServiceTypesManagement() {
     name: '',
     description: '',
     icon: 'medical',
-    price_per_hour: '',
     is_active: true,
-    display_order: '0',
   });
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState('');
@@ -91,7 +84,7 @@ export default function ServiceTypesManagement() {
     const { data, error } = await supabase
       .from('service_types')
       .select('*')
-      .order('display_order', { ascending: true });
+      .order('name', { ascending: true });
 
     if (data) setServices(data);
     setLoading(false);
@@ -106,9 +99,7 @@ export default function ServiceTypesManagement() {
         name: '',
         description: '',
         icon: 'medical',
-        price_per_hour: '',
         is_active: true,
-        display_order: String(services.length),
       });
       setSelectedService(null);
     } else if (service) {
@@ -116,10 +107,8 @@ export default function ServiceTypesManagement() {
       setFormData({
         name: service.name,
         description: service.description || '',
-        icon: service.icon || '🏥',
-        price_per_hour: service.price_per_hour?.toString() || '',
+        icon: service.icon || 'medical',
         is_active: service.is_active,
-        display_order: service.display_order.toString(),
       });
     }
   };
@@ -150,9 +139,7 @@ export default function ServiceTypesManagement() {
           name: formData.name,
           description: formData.description || null,
           icon: formData.icon,
-          price_per_hour: formData.price_per_hour ? parseFloat(formData.price_per_hour) : null,
           is_active: formData.is_active,
-          display_order: parseInt(formData.display_order),
         });
 
       if (error) throw error;
@@ -181,9 +168,7 @@ export default function ServiceTypesManagement() {
           name: formData.name,
           description: formData.description || null,
           icon: formData.icon,
-          price_per_hour: formData.price_per_hour ? parseFloat(formData.price_per_hour) : null,
           is_active: formData.is_active,
-          display_order: parseInt(formData.display_order),
         })
         .eq('id', selectedService.id);
 
@@ -270,7 +255,7 @@ export default function ServiceTypesManagement() {
               className={`bg-white rounded-lg shadow-md p-6 ${!service.is_active ? 'opacity-60' : ''}`}
             >
               <div className="flex justify-between items-start mb-4">
-                <div className="p-2 rounded-2xl border-2" style={{ backgroundColor: '#694EAB', borderColor: '#4e3a80' }}>
+                <div className="p-2 rounded-2xl border-2" style={{ backgroundColor: '#267ABA', borderColor: '#156CAF' }}>
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={iconOptions.find(io => io.name === service.icon)?.d || iconOptions[0].d} />
                   </svg>
@@ -282,12 +267,6 @@ export default function ServiceTypesManagement() {
               
               <h3 className="text-xl font-bold mb-2">{service.name}</h3>
               <p className="text-gray-600 text-sm mb-4 h-12 overflow-hidden">{service.description}</p>
-              
-              {service.price_per_hour && (
-                <div className="text-lg font-semibold text-blue-600 mb-4">
-                  RWF {service.price_per_hour}/hour
-                </div>
-              )}
 
               <div className="flex gap-2 text-sm">
                 <button
@@ -312,7 +291,7 @@ export default function ServiceTypesManagement() {
                   onClick={() => handleDeleteService(service.id, service.name)}
                   className="px-3 py-2 bg-red-50 text-red-600 rounded hover:bg-red-100"
                 >
-                  🗑️
+                  Delete
                 </button>
               </div>
             </div>
@@ -321,7 +300,11 @@ export default function ServiceTypesManagement() {
 
         {services.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4">🏥</div>
+            <div className="mb-4">
+              <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
             <h3 className="text-xl font-semibold mb-2">No Service Types Yet</h3>
             <p className="text-gray-600 mb-4">Create your first service type to get started</p>
             <button
@@ -336,7 +319,7 @@ export default function ServiceTypesManagement() {
         {/* Summary */}
         <div className="mt-6 bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold mb-2">Summary</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div>
               <div className="text-2xl font-bold text-blue-600">{services.length}</div>
               <div className="text-sm text-gray-600">Total Services</div>
@@ -348,12 +331,6 @@ export default function ServiceTypesManagement() {
             <div>
               <div className="text-2xl font-bold text-gray-600">{services.filter(s => !s.is_active).length}</div>
               <div className="text-sm text-gray-600">Inactive</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-purple-600">
-                RWF {(services.filter(s => s.price_per_hour).reduce((sum, s) => sum + (s.price_per_hour || 0), 0) / (services.filter(s => s.price_per_hour).length || 1)).toFixed(0)}
-              </div>
-              <div className="text-sm text-gray-600">Avg Price/Hour</div>
             </div>
           </div>
         </div>
@@ -403,16 +380,14 @@ export default function ServiceTypesManagement() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Price per Hour</label>
-                      <p className="text-lg font-semibold text-blue-600">
-                        {selectedService.price_per_hour ? `RWF ${selectedService.price_per_hour}` : 'Not set'}
-                      </p>
-                    </div>
-                    <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                       <span className={`inline-block px-3 py-1 rounded-full text-sm ${selectedService.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                         {selectedService.is_active ? 'Active' : 'Inactive'}
                       </span>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Created</label>
+                      <p className="text-sm text-gray-600">{new Date(selectedService.created_at).toLocaleDateString()}</p>
                     </div>
                   </div>
                   <div className="flex gap-3 mt-6">
@@ -485,35 +460,6 @@ export default function ServiceTypesManagement() {
                         rows={3}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Price per Hour (RWF)
-                        </label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          name="price_per_hour"
-                          value={formData.price_per_hour}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Display Order
-                        </label>
-                        <input
-                          type="number"
-                          name="display_order"
-                          value={formData.display_order}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
                     </div>
 
                     <div className="flex items-center">

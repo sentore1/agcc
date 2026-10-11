@@ -166,7 +166,7 @@ export default function CategoriesPage() {
   const handleDelete = async (cat: Category) => {
     const courseCount = courseCountMap[cat.name] ?? 0;
     if (courseCount > 0) {
-      alert(`Cannot delete "${cat.name}" — ${courseCount} course(s) still use this category.\n\nReassign those courses to a different category first, then delete.`);
+      alert(`Cannot delete "${cat.name}"${courseCount} course(s) still use this category.\n\nReassign those courses to a different category first, then delete.`);
       return;
     }
     if (!confirm(`Permanently delete "${cat.name}"? This cannot be undone.`)) return;

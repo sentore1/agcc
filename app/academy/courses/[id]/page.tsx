@@ -137,7 +137,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
 
   if (!course) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24 text-center">
         <h1 className="text-2xl font-bold mb-4">Course Not Found</h1>
         <Link href="/academy/courses" className="text-purple-600 hover:underline">
           Back to Courses
@@ -147,7 +147,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24">
       {/* Breadcrumb */}
       <div className="mb-6 text-sm text-gray-600 flex flex-wrap gap-1 items-center">
         <Link href="/" className="hover:text-gray-900">Home</Link>

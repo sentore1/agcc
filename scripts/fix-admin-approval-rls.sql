@@ -61,7 +61,7 @@ CREATE TRIGGER trigger_auto_certificate
   EXECUTE FUNCTION public.auto_generate_certificate();
 
 -- ============================================================
--- 4. course_payments — drop ALL existing policies and recreate cleanly
+-- 4. course_paymentsdrop ALL existing policies and recreate cleanly
 -- ============================================================
 DO $$
 DECLARE r RECORD;
@@ -93,7 +93,7 @@ CREATE POLICY "users_update_own_pending_course_payments"
   WITH CHECK (user_id = auth.uid());
 
 -- ============================================================
--- 5. enrollments — drop ALL existing policies and recreate cleanly
+-- 5. enrollmentsdrop ALL existing policies and recreate cleanly
 -- ============================================================
 DO $$
 DECLARE r RECORD;
@@ -143,4 +143,4 @@ SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_name = 'enrollments' AND column_name IN ('completed', 'completed_at');
 
-SELECT '✅ Fix applied successfully — admin approval should work now' AS status;
+SELECT '✅ Fix applied successfullyadmin approval should work now' AS status;

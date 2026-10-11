@@ -1,81 +1,202 @@
 'use client'
 import Link from 'next/link'
-import { Logo } from '@/components/logo'
-import { Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import React from 'react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 const menuItems = [
-    { name: 'Features', href: '#link' },
-    { name: 'Pricing', href: '#link' },
-    { name: 'About', href: '#link' },
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
+    { 
+        name: 'Services', 
+        href: '/care',
+        submenu: [
+            { name: 'All Services', href: '/care' },
+            { name: 'Care for Seniors', href: '/care/seniors' },
+            { name: 'Child & Family Care', href: '/care/children' },
+            { name: 'Companionship', href: '/care/companionship' },
+            { name: 'Home Support', href: '/care/home-support' },
+        ]
+    },
+    { 
+        name: 'Caregiver', 
+        href: '/careers/apply',
+        submenu: [
+            { name: 'Become a Caregiver', href: '/careers/apply' },
+            { name: 'Request a Caregiver', href: '/care/booking' },
+        ]
+    },
+    { name: 'Contact Us', href: '/contact' },
 ]
 
 export const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
+    const [openDropdown, setOpenDropdown] = React.useState<string | null>(null)
 
     React.useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50)
+            setIsScrolled(window.scrollY > 20)
         }
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+    
     return (
-        <header>
+        <header className="fixed top-0 left-0 right-0 z-50">
             <nav
-                data-state={menuState && 'active'}
-                className={cn('fixed z-20 w-full transition-all duration-300', isScrolled && 'bg-background/75 border-b border-black/5 backdrop-blur-lg')}>
-                <div className="mx-auto max-w-5xl px-6">
-                    <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0">
-                        <div className="flex w-full justify-between gap-6 lg:w-auto">
+                className={cn(
+                    'transition-all duration-300',
+                    isScrolled 
+                        ? 'bg-white/95 backdrop-blur-md shadow-sm' 
+                        : 'bg-white'
+                )}
+            >
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-between h-16">
+                        {/* Logo and Desktop Navigation - Left */}
+                        <div className="flex items-center gap-2">
                             <Link
                                 href="/"
                                 aria-label="home"
-                                className="flex items-center space-x-2">
-                                <Logo />
+                                className="flex items-center gap-2 group"
+                            >
+                                <Image
+                                    src="/logo.png"
+                                    alt="Logo"
+                                    width={240}
+                                    height={80}
+                                    className="h-20 w-auto"
+                                    priority
+                                    unoptimized
+                                />
                             </Link>
 
-                            <button
-                                onClick={() => setMenuState(!menuState)}
-                                aria-label={menuState == true ? 'Close Menu' : 'Open Menu'}
-                                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden">
-                                <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-                                <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
-                            </button>
-
-                            <div className="m-auto hidden size-fit lg:block">
-                                <ul className="flex gap-1">
-                                    {menuItems.map((item, index) => (
-                                        <li key={index}>
-                                            <Button variant="ghost" size="sm" render={<Link href={item.href} className="text-base" />} nativeButton={false}><span>{item.name}</span></Button>
-                                        </li>
-                                    ))}
-                                </ul>
+                            <div className="hidden lg:flex items-center gap-1">
+                                {menuItems.map((item, index) => (
+                                    <div 
+                                        key={index} 
+                                        className="relative"
+                                        onMouseEnter={() => item.submenu && setOpenDropdown(item.name)}
+                                        onMouseLeave={() => setOpenDropdown(null)}
+                                    >
+                                        <Link
+                                            href={item.href}
+                                            className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 rounded-lg transition-colors relative flex items-center gap-1 group"
+                                        >
+                                            {item.name}
+                                            {item.submenu && (
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            )}
+                                            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gray-900 group-hover:w-3/4 transition-all duration-300" />
+                                        </Link>
+                                        
+                                        {/* Dropdown Menu */}
+                                        {item.submenu && openDropdown === item.name && (
+                                            <div className="absolute top-full left-0 pt-1 z-50">
+                                                <div className="w-56 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
+                                                    {item.submenu.map((subitem, subindex) => (
+                                                        <Link
+                                                            key={subindex}
+                                                            href={subitem.href}
+                                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                                        >
+                                                            {subitem.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
-                        <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-                            <div className="lg:hidden">
-                                <ul className="space-y-6 text-base">
-                                    {menuItems.map((item, index) => (
-                                        <li key={index}>
+                        {/* Right Side Actions */}
+                        <div className="hidden lg:flex items-center gap-3">
+                            <Link
+                                href="/auth/signin"
+                                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 rounded-lg transition-colors"
+                            >
+                                Log in
+                            </Link>
+                            <Link
+                                href="/care/booking"
+                                className="px-5 py-2 text-sm font-semibold text-white rounded-lg transition-all shadow-sm hover:shadow-md"
+                                style={{ backgroundColor: '#267ABA' }}
+                            >
+                                Book Care Service
+                            </Link>
+                        </div>
+
+                        {/* Mobile Menu Button */}
+                        <button
+                            onClick={() => setMenuState(!menuState)}
+                            className="lg:hidden p-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {menuState ? (
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                ) : (
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                )}
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile Menu */}
+                <div
+                    className={cn(
+                        'lg:hidden overflow-hidden transition-all duration-300',
+                        menuState ? 'max-h-[600px] border-t border-gray-100' : 'max-h-0'
+                    )}
+                >
+                    <div className="bg-white px-4 py-4 space-y-2">
+                        {menuItems.map((item, index) => (
+                            <div key={index}>
+                                <Link
+                                    href={item.href}
+                                    className="block px-4 py-3 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                                    onClick={() => !item.submenu && setMenuState(false)}
+                                >
+                                    {item.name}
+                                </Link>
+                                {/* Mobile Submenu */}
+                                {item.submenu && (
+                                    <div className="ml-4 mt-1 space-y-1">
+                                        {item.submenu.map((subitem, subindex) => (
                                             <Link
-                                                href={item.href}
-                                                className="text-muted-foreground hover:text-accent-foreground block duration-150">
-                                                <span>{item.name}</span>
+                                                key={subindex}
+                                                href={subitem.href}
+                                                className="block px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                                                onClick={() => setMenuState(false)}
+                                            >
+                                                {subitem.name}
                                             </Link>
-                                        </li>
-                                    ))}
-                                </ul>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                            <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                                <Button variant="ghost" size="sm" className={cn(isScrolled && 'lg:hidden')} render={<Link href="#" />} nativeButton={false}><span>Login</span></Button>
-                                <Button size="sm" className={cn(isScrolled && 'lg:hidden')} render={<Link href="#" />} nativeButton={false}><span>Sign Up</span></Button>
-                                <Button size="sm" className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')} render={<Link href="#" />} nativeButton={false}><span>Get Started</span></Button>
-                            </div>
+                        ))}
+                        <div className="pt-4 space-y-2 border-t border-gray-100">
+                            <Link
+                                href="/auth/signin"
+                                className="block px-4 py-3 text-center text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                                onClick={() => setMenuState(false)}
+                            >
+                                Log in
+                            </Link>
+                            <Link
+                                href="/care/booking"
+                                className="block px-4 py-3 text-center text-base font-semibold text-white rounded-lg transition-all"
+                                style={{ backgroundColor: '#267ABA' }}
+                                onClick={() => setMenuState(false)}
+                            >
+                                Book Care Service
+                            </Link>
                         </div>
                     </div>
                 </div>

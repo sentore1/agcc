@@ -38,7 +38,7 @@ When users click on "courses" or course-related links in your platform, they nav
 ### 3. **Academy Page (`/academy`)**
    ```
    /academy
-   ├─ Hero: "Igeno Gate Academy"
+   ├─ Hero: "AGCC Rwanda Academy"
    ├─ "Browse Courses" button → /academy/courses
    ├─ "My Dashboard" button → /dashboard
    ├─ Features section (Video Lessons, Resources, etc.)

@@ -11,6 +11,8 @@ interface TimesheetFormProps {
 interface Booking {
   id: string;
   service_type: string;
+  service_type_name?: string;
+  service_type_id?: string | null;
   scheduled_date: string;
   scheduled_time: string;
   clients: {
@@ -54,6 +56,37 @@ export default function TimesheetForm({ caregiverId, onSuccess }: TimesheetFormP
 
   const supabase = createBrowserClient();
 
+  // Helper function to format time from HH:MM:SS to HH:MM AM/PM
+  const formatTime = (timeString: string) => {
+    try {
+      // Handle malformed times like "1408:00"
+      if (timeString.includes(':')) {
+        const parts = timeString.split(':');
+        let hours = parseInt(parts[0]);
+        const minutes = parts[1] || '00';
+        
+        // Fix malformed hours (e.g., 1408 -> 14)
+        if (hours > 23) {
+          const timeStr = hours.toString();
+          hours = parseInt(timeStr.substring(0, timeStr.length - 2));
+        }
+        
+        const period = hours >= 12 ? 'PM' : 'AM';
+        const displayHours = hours > 12 ? hours - 12 : (hours === 0 ? 12 : hours);
+        return `${displayHours}:${minutes} ${period}`;
+      }
+      return timeString;
+    } catch {
+      return timeString;
+    }
+  };
+
+  // Helper function to get service type name
+  const getServiceTypeName = (booking: Booking) => {
+    // Use the enriched service_type_name if available
+    return booking.service_type_name || booking.service_type || 'Service';
+  };
+
   useEffect(() => {
     loadData();
   }, [caregiverId]);
@@ -77,14 +110,16 @@ export default function TimesheetForm({ caregiverId, onSuccess }: TimesheetFormP
 
     // Load today's bookings
     const today = new Date().toISOString().split('T')[0];
-    const { data: bookings } = await supabase
+    
+    // First try to get bookings with proper joins
+    const { data: bookings, error: bookingsError } = await supabase
       .from('bookings')
       .select(`
         id,
         service_type,
         scheduled_date,
         scheduled_time,
-        clients (
+        clients:client_id (
           full_name
         )
       `)
@@ -92,8 +127,33 @@ export default function TimesheetForm({ caregiverId, onSuccess }: TimesheetFormP
       .eq('scheduled_date', today)
       .order('scheduled_time');
 
-    if (bookings) {
-      setTodayBookings(bookings as any);
+    if (bookings && !bookingsError) {
+      // For each booking, if service_type is a UUID, try to fetch the service name
+      const enrichedBookings = await Promise.all(
+        bookings.map(async (booking: any) => {
+          // Check if service_type looks like a UUID
+          if (booking.service_type?.length === 36 && booking.service_type.includes('-')) {
+            const { data: serviceType } = await supabase
+              .from('service_types')
+              .select('name')
+              .eq('id', booking.service_type)
+              .single();
+            
+            return {
+              ...booking,
+              service_type_name: serviceType?.name || 'Service',
+              service_type_id: booking.service_type
+            };
+          }
+          return {
+            ...booking,
+            service_type_name: booking.service_type,
+            service_type_id: null
+          };
+        })
+      );
+      
+      setTodayBookings(enrichedBookings as any);
     }
 
     setLoading(false);
@@ -235,7 +295,7 @@ export default function TimesheetForm({ caregiverId, onSuccess }: TimesheetFormP
                   <option value="">No specific booking</option>
                   {todayBookings.map((booking) => (
                     <option key={booking.id} value={booking.id}>
-                      {booking.scheduled_time} - {booking.service_type} ({booking.clients?.full_name || 'Unknown'})
+                      {formatTime(booking.scheduled_time)} - {getServiceTypeName(booking)} ({booking.clients?.full_name || 'Unknown Client'})
                     </option>
                   ))}
                 </select>
@@ -349,51 +409,56 @@ export default function TimesheetForm({ caregiverId, onSuccess }: TimesheetFormP
             </div>
 
             {/* Tasks Completed */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
+              {/* Blue Header */}
+              <div className="px-4 py-3 text-white font-semibold" style={{ backgroundColor: '#1481BA' }}>
                 Tasks Completed
-              </label>
-              <div className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={newTask}
-                  onChange={(e) => setNewTask(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTask())}
-                  placeholder="Add a task and press Enter or click Add"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="button"
-                  onClick={addTask}
-                  className="px-4 py-2 text-white rounded-md font-semibold"
-                  style={{ backgroundColor: '#1481BA' }}
-                >
-                  Add
-                </button>
               </div>
-              {checkOutData.tasks_completed.length > 0 && (
-                <ul className="space-y-2">
-                  {checkOutData.tasks_completed.map((task, index) => (
-                    <li key={index} className="flex items-center justify-between bg-gray-50 p-3 rounded-md">
-                      <span className="flex items-center text-gray-700">
-                        <svg className="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {task}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => removeTask(index)}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              
+              {/* Content Area */}
+              <div className="p-4 bg-white">
+                <div className="flex gap-2 mb-3">
+                  <input
+                    type="text"
+                    value={newTask}
+                    onChange={(e) => setNewTask(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTask())}
+                    placeholder="Add a task and press Enter or click Add"
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <button
+                    type="button"
+                    onClick={addTask}
+                    className="px-4 py-2 text-white rounded-md font-semibold"
+                    style={{ backgroundColor: '#1481BA' }}
+                  >
+                    Add
+                  </button>
+                </div>
+                {checkOutData.tasks_completed.length > 0 && (
+                  <ul className="space-y-2">
+                    {checkOutData.tasks_completed.map((task, index) => (
+                      <li key={index} className="flex items-center justify-between bg-gray-50 p-3 rounded-md">
+                        <span className="flex items-center text-gray-700">
+                          <svg className="w-5 h-5 mr-2 flex-shrink-0" style={{ color: '#1481BA' }} fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          {task}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeTask(index)}
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
 
             {/* Client Feedback */}

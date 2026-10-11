@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -68,6 +68,11 @@ export default function BookingPage() {
   const [generatingQR, setGeneratingQR] = useState(false);
   const [bookingDurationMode, setBookingDurationMode] = useState<'hourly' | 'daily' | 'both'>('daily');
   const [durationType, setDurationType] = useState<'hours' | 'days'>('days');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showSubmitOptions, setShowSubmitOptions] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(true); // Default to checked
+
   const router = useRouter();
   const supabase = createBrowserClient();
 
@@ -85,9 +90,12 @@ export default function BookingPage() {
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      router.push('/auth/signin');
+      // Allow anonymous users to fill the form
+      setIsAuthenticated(false);
       return;
     }
+
+    setIsAuthenticated(true);
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -100,9 +108,9 @@ export default function BookingPage() {
       return;
     }
 
-    const clientRoles = ['client', 'caregiver', 'nurse'];
-    if (!clientRoles.includes(profile.role)) {
-      setError(`Booking services are only available for clients, caregivers, and nurses. Your role is: ${profile.role}`);
+    // Admins should not book as clients
+    if (profile.role === 'admin') {
+      setIsAdmin(true);
       return;
     }
 
@@ -140,7 +148,7 @@ export default function BookingPage() {
       .from('service_types')
       .select('*')
       .eq('is_active', true)
-      .order('display_order', { ascending: true });
+      .order('name', { ascending: true });
 
     if (data) {
       setServices(data);
@@ -258,6 +266,14 @@ export default function BookingPage() {
 
   const handleDetailsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      // Show options modal for anonymous users
+      setShowSubmitOptions(true);
+      return;
+    }
+    
     if (!momoSettings) {
       // If no payment settings, skip to direct booking
       handleFinalSubmit();
@@ -266,6 +282,43 @@ export default function BookingPage() {
       await generateDynamicQRCode();
       setStep('payment');
     }
+  };
+
+  const handleSendToWhatsApp = () => {
+    const service = services.find(s => s.id === serviceType);
+    const message = `
+ðŸ¥ *New Care Service Request*
+
+*Service:* ${service?.name}
+*Date:* ${scheduledDate}
+*Time:* ${scheduledTime}
+*Duration:* ${duration} ${durationType}
+*Notes:* ${notes || 'None'}
+
+*Contact Information:*
+Name: ${guestName}
+Phone: ${guestPhone}
+Email: ${guestEmail}
+    `.trim();
+    
+    const whatsappNumber = '+250788888888'; // Replace with your WhatsApp number
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+    
+    setSuccess(true);
+    setShowSubmitOptions(false);
+  };
+
+  const handleCreateAccountAndBook = () => {
+    sessionStorage.setItem('pendingBooking', JSON.stringify({
+      serviceType: selectedService?.name || serviceType,
+      scheduledDate,
+      scheduledTime,
+      duration,
+      durationType,
+      notes,
+    }));
+    router.push('/auth/signup?redirect=booking');
   };
 
   const generateDynamicQRCode = async () => {
@@ -346,7 +399,6 @@ export default function BookingPage() {
           status: 'pending',
           payment_status: paymentProofUrl ? 'pending_verification' : 'pending',
           payment_method: momoSettings ? 'momo' : null,
-          payment_amount: calculatedAmount > 0 ? calculatedAmount : null,
           payment_proof_url: paymentProofUrl,
         });
 
@@ -365,11 +417,25 @@ export default function BookingPage() {
     }
   };
 
-  if (success && step === 'confirmation') {
+  if (isAdmin) {
     return (
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24">
         <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <div className="text-green-600 text-6xl mb-4">✓</div>
+          <div className="text-4xl mb-4">🔒</div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Admin Account Detected</h2>
+          <p className="text-gray-600 mb-6">Bookings are for clients only. As an admin, you can manage bookings from the admin dashboard.</p>
+          <a href="/dashboard/admin/bookings" className="inline-block px-6 py-3 text-white rounded-md font-semibold" style={{ backgroundColor: '#267ABA' }}>
+            Go to Bookings Dashboard
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  if (success && step === 'confirmation') {    return (
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24">
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <div className="text-green-600 text-6xl mb-4">âœ“</div>
           <h2 className="text-3xl font-bold text-green-800 mb-4">Booking Confirmed!</h2>
           <p className="text-gray-700 mb-2">Your service booking has been created successfully.</p>
           {momoSettings && (
@@ -390,13 +456,14 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24">
       {/* Progress Steps */}
       <div className="mb-8">
         <div className="flex items-center justify-center">
           <div className={`flex items-center ${step === 'details' ? 'text-blue-600' : 'text-green-600'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'details' ? 'bg-blue-600' : 'bg-green-600'} text-white font-bold`}>
-              {step === 'details' ? '1' : '✓'}
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold`} style={{ backgroundColor: step === 'details' ? '#267ABA' : '#16a34a' }}>
+              {step === 'details' ? '1' : 'âœ“'}
             </div>
             <span className="ml-2 font-semibold">Service Details</span>
           </div>
@@ -405,8 +472,8 @@ export default function BookingPage() {
             <>
               <div className="w-16 h-1 mx-4 bg-gray-300"></div>
               <div className={`flex items-center ${step === 'payment' ? 'text-blue-600' : step === 'confirmation' ? 'text-green-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'payment' ? 'bg-blue-600' : step === 'confirmation' ? 'bg-green-600' : 'bg-gray-300'} text-white font-bold`}>
-                  {step === 'confirmation' ? '✓' : '2'}
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold`} style={{ backgroundColor: step === 'payment' ? '#267ABA' : step === 'confirmation' ? '#16a34a' : '#d1d5db' }}>
+                  {step === 'confirmation' ? 'âœ“' : '2'}
                 </div>
                 <span className="ml-2 font-semibold">Payment</span>
               </div>
@@ -418,7 +485,7 @@ export default function BookingPage() {
       <h1 className="text-3xl font-bold mb-8 text-center">Book a Care Service</h1>
 
       {error && (
-        <div className="mb-6 rounded-lg p-4" style={{ backgroundColor: '#1992A3' }}>
+        <div className="mb-6 rounded-lg p-4" style={{ backgroundColor: '#267ABA' }}>
           <p className="text-white font-semibold">{error}</p>
         </div>
       )}
@@ -438,25 +505,38 @@ export default function BookingPage() {
                     onClick={() => handleServiceChange(service.id)}
                     className={`rounded-lg p-4 cursor-pointer transition shadow-md ${
                       serviceType === service.id
-                        ? 'bg-blue-50 shadow-lg'
-                        : 'hover:shadow-lg'
+                        ? 'shadow-xl border-2'
+                        : 'hover:shadow-lg border-2 border-transparent'
                     }`}
+                    style={serviceType === service.id ? { 
+                      backgroundColor: '#267ABA',
+                      borderColor: '#156CAF'
+                    } : {}}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-2xl border-2" style={{ backgroundColor: '#694EAB', borderColor: '#4e3a80' }}>
-                        <svg className={`w-6 h-6 text-white`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="p-2 rounded-2xl border-2" style={{ 
+                        backgroundColor: serviceType === service.id ? '#FFFFFF' : '#267ABA', 
+                        borderColor: serviceType === service.id ? '#156CAF' : '#156CAF'
+                      }}>
+                        <svg className={`w-6 h-6 ${serviceType === service.id ? 'text-blue-600' : 'text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon && iconMap[service.icon] ? iconMap[service.icon] : iconMap['medical']} />
                         </svg>
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-lg">{service.name}</h3>
-                        <p className="text-sm text-gray-600">{service.description}</p>
+                        <h3 className={`font-semibold text-lg ${serviceType === service.id ? 'text-white' : 'text-gray-900'}`}>
+                          {service.name}
+                        </h3>
+                        <p className={`text-sm ${serviceType === service.id ? 'text-white/90' : 'text-gray-600'}`}>
+                          {service.description}
+                        </p>
                         {service.price_per_hour && (
-                          <p className="text-blue-600 font-bold mt-2">RWF {service.price_per_hour}/hour</p>
+                          <p className={`font-bold mt-2 ${serviceType === service.id ? 'text-white' : 'text-blue-600'}`}>
+                            RWF {service.price_per_hour}/hour
+                          </p>
                         )}
                       </div>
                       {serviceType === service.id && (
-                        <div className="text-blue-600 text-xl">✓</div>
+                        <div className="text-white text-2xl font-bold">âœ“</div>
                       )}
                     </div>
                   </div>
@@ -511,9 +591,10 @@ export default function BookingPage() {
                     }}
                     className={`flex-1 px-4 py-2 rounded-md font-semibold transition ${
                       durationType === 'hours'
-                        ? 'bg-blue-600 text-white'
+                        ? 'text-white'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
+                    style={durationType === 'hours' ? { backgroundColor: '#267ABA' } : {}}
                   >
                     Per Hour
                   </button>
@@ -525,9 +606,10 @@ export default function BookingPage() {
                     }}
                     className={`flex-1 px-4 py-2 rounded-md font-semibold transition ${
                       durationType === 'days'
-                        ? 'bg-blue-600 text-white'
+                        ? 'text-white'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
+                    style={durationType === 'days' ? { backgroundColor: '#267ABA' } : {}}
                   >
                     Per Day
                   </button>
@@ -608,16 +690,48 @@ export default function BookingPage() {
                 onChange={(e) => setNotes(e.target.value)}
               />
             </div>
-          </div>
 
-          <div className="mt-8 flex gap-4">
+            {/* Terms and Conditions */}
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="termsAccepted"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  className="w-5 h-5 mt-0.5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label htmlFor="termsAccepted" className="text-sm text-gray-700 cursor-pointer flex-1">
+                  I agree to the{' '}
+                  <a 
+                    href="/terms" 
+                    target="_blank"
+                    className="font-semibold hover:underline"
+                    style={{ color: '#267ABA' }}
+                  >
+                    Terms and Conditions
+                  </a>
+                  {' '}and understand that:
+                  <ul className="mt-2 ml-5 space-y-1 text-gray-600">
+                    <li>• Services are subject to caregiver availability</li>
+                    <li>• Payment must be made before service confirmation</li>
+                    <li>• Cancellation policy applies as per terms</li>
+                    <li>• All personal information will be kept confidential</li>
+                  </ul>
+                </label>
+              </div>
+            </div>
+
             <button
               type="submit"
-              disabled={loading || !serviceType}
+              disabled={loading || !serviceType || !termsAccepted}
               className="flex-1 px-6 py-3 text-white rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ backgroundColor: '#1A92A3' }}
+              style={{ backgroundColor: '#267ABA' }}
             >
-              {momoSettings ? 'Proceed to Payment' : 'Book Service'}
+              {isAuthenticated 
+                ? (momoSettings ? 'Proceed to Payment' : 'Book Service')
+                : 'Continue'
+              }
             </button>
             <button
               type="button"
@@ -660,9 +774,9 @@ export default function BookingPage() {
             ) : null}
 
             {/* USSD Payment Code Display */}
-            <div className="rounded-lg p-6" style={{ backgroundColor: '#694EAB' }}>
+            <div className="rounded-lg p-6" style={{ backgroundColor: '#267ABA' }}>
               <p className="font-bold text-white mb-4 text-center text-lg">
-                {dynamicQRCode ? ' Or dial this code manually:' : '📱 Dial this code from your phone:'}
+                {dynamicQRCode ? ' Or dial this code manually:' : 'ðŸ“± Dial this code from your phone:'}
               </p>
               
               {momoSettings.settings.momo_code ? (
@@ -694,7 +808,7 @@ export default function BookingPage() {
 
             {/* Bank Transfer Section */}
             {bankSettings && (
-              <div className="rounded-lg p-6" style={{ backgroundColor: '#009292' }}>
+              <div className="rounded-lg p-6" style={{ backgroundColor: '#267ABA' }}>
                 <p className="text-sm font-semibold text-white mb-3">Or pay via Bank Transfer:</p>
                 <p className="text-xl font-bold text-white mb-1">{bankSettings.settings.bank_name}</p>
                 <p className="text-white opacity-90">{bankSettings.settings.bank_account_name}</p>
@@ -759,6 +873,69 @@ export default function BookingPage() {
           </div>
         </form>
       )}
-    </div>
+
+      {/* Guest Submission Options Modal - Choose your submission method */}
+      {showSubmitOptions && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">How would you like to proceed?</h2>
+            <p className="text-gray-600 mb-6">
+              Choose how you'd like to submit your booking request:
+            </p>
+
+            <div className="space-y-4">
+              {/* Option 1: Create Account */}
+              <button
+                onClick={handleCreateAccountAndBook}
+                className="w-full p-4 rounded-lg border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 transition-all text-left"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg" style={{ backgroundColor: '#267ABA' }}>
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Create Account & Book</h3>
+                    <p className="text-sm text-gray-600">
+                      Create an account to track your booking, make payments, and manage your services.
+                    </p>
+                  </div>
+                </div>
+              </button>
+
+              {/* Option 2: Send to WhatsApp */}
+              <button
+                onClick={handleSendToWhatsApp}
+                className="w-full p-4 rounded-lg border-2 border-green-200 hover:border-green-400 hover:bg-green-50 transition-all text-left"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-green-500 rounded-lg">
+                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 mb-1">Send via WhatsApp</h3>
+                    <p className="text-sm text-gray-600">
+                      Send your request directly to our WhatsApp for quick processing.
+                    </p>
+                  </div>
+                </div>
+              </button>
+
+              {/* Cancel */}
+              <button
+                onClick={() => setShowSubmitOptions(false)}
+                className="w-full px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      </div>
+    </>
   );
 }

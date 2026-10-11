@@ -11,12 +11,21 @@ export default function Navigation() {
   const [user, setUser] = useState<User | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     loadUser();
+    
+    // Handle scroll event
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const loadUser = async () => {
@@ -68,7 +77,7 @@ export default function Navigation() {
   const isDashboard = pathname?.startsWith('/dashboard');
 
   return (
-    <nav className="bg-white">
+    <nav className={`bg-white sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'border-b border-gray-200 shadow-sm' : ''}`}>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -83,14 +92,16 @@ export default function Navigation() {
               <>
                 <Link 
                   href="/dashboard" 
-                  className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname === '/dashboard' ? 'bg-purple-100 text-purple-700' : 'text-gray-700 hover:bg-gray-100'}`}
+                  className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname === '/dashboard' ? 'text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                  style={pathname === '/dashboard' ? { backgroundColor: '#156CAF' } : {}}
                 >
                   My Dashboard
                 </Link>
                 {user.role === 'admin' && (
                   <Link 
                     href="/dashboard/admin" 
-                    className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/dashboard/admin') ? 'bg-purple-100 text-purple-700' : 'text-gray-700 hover:bg-gray-100'}`}
+                    className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/dashboard/admin') ? 'text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                    style={pathname?.startsWith('/dashboard/admin') ? { backgroundColor: '#156CAF' } : {}}
                   >
                     Admin Panel
                   </Link>
@@ -98,7 +109,8 @@ export default function Navigation() {
                 {user.role === 'caregiver' && (
                   <Link 
                     href="/dashboard/caregiver" 
-                    className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/dashboard/caregiver') ? 'bg-purple-100 text-purple-700' : 'text-gray-700 hover:bg-gray-100'}`}
+                    className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/dashboard/caregiver') ? 'text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                    style={pathname?.startsWith('/dashboard/caregiver') ? { backgroundColor: '#156CAF' } : {}}
                   >
                     Caregiver Dashboard
                   </Link>
@@ -108,13 +120,15 @@ export default function Navigation() {
               <>
                 <Link 
                   href="/care" 
-                  className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/care') ? 'bg-purple-100 text-purple-700' : 'text-gray-700 hover:bg-gray-100'}`}
+                  className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/care') ? 'text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                  style={pathname?.startsWith('/care') ? { backgroundColor: '#156CAF' } : {}}
                 >
                   Care Services
                 </Link>
                 <Link 
                   href="/academy" 
-                  className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/academy') ? 'bg-purple-100 text-purple-700' : 'text-gray-700 hover:bg-gray-100'}`}
+                  className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${pathname?.startsWith('/academy') ? 'text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                  style={pathname?.startsWith('/academy') ? { backgroundColor: '#156CAF' } : {}}
                 >
                   Academy
                 </Link>
@@ -133,12 +147,12 @@ export default function Navigation() {
                     className="flex items-center space-x-2 px-3 py-2 rounded-md transition-colors bg-gray-100"
                   >
                     {/* Avatar */}
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white font-semibold text-sm shadow-md">
+                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md" style={{ background: 'linear-gradient(135deg, #156CAF 0%, #0d5a94 100%)' }}>
                       {getInitials(user.full_name || 'User')}
                     </div>
                     <div className="flex flex-col items-start">
                       <span className="text-sm font-medium text-gray-900">{user.full_name}</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">{user.role}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#156CAF' }}>{user.role}</span>
                     </div>
                     {/* Dropdown Arrow */}
                     <svg 
@@ -163,7 +177,12 @@ export default function Navigation() {
                       </div>
                       <Link
                         href="/profile"
-                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                        style={{ 
+                          '&:hover': { backgroundColor: '#98D2FA20' }
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         <svg className="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -172,7 +191,9 @@ export default function Navigation() {
                       </Link>
                       <Link
                         href="/dashboard"
-                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
+                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >
                         <svg className="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -182,7 +203,9 @@ export default function Navigation() {
                       {user.role === 'admin' && (
                         <Link
                           href="/dashboard/admin"
-                          className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
+                          className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                         >
                           <svg className="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -194,7 +217,9 @@ export default function Navigation() {
                       {user.role === 'caregiver' && (
                         <Link
                           href="/dashboard/caregiver"
-                          className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
+                          className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                         >
                           <svg className="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -220,13 +245,19 @@ export default function Navigation() {
               <>
                 <Link
                   href="/auth/signin"
-                  className="px-3 py-1.5 text-sm font-medium text-purple-600 hover:text-purple-800 transition-colors"
+                  className="px-3 py-1.5 text-sm font-medium transition-colors"
+                  style={{ color: '#156CAF' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#0d5a94'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#156CAF'}
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="px-3 py-1.5 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-700 transition-colors shadow-sm"
+                  className="px-3 py-1.5 text-sm font-medium text-white rounded-md transition-colors shadow-sm"
+                  style={{ backgroundColor: '#156CAF' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0d5a94'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#156CAF'}
                 >
                   Sign Up
                 </Link>
@@ -238,7 +269,10 @@ export default function Navigation() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="text-gray-700 hover:text-purple-600"
+              className="text-gray-700"
+              style={{ color: menuOpen ? '#156CAF' : undefined }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#156CAF'}
+              onMouseLeave={(e) => { if (!menuOpen) e.currentTarget.style.color = '#374151'; }}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -252,42 +286,80 @@ export default function Navigation() {
           <div className="md:hidden pb-4 space-y-2">
             {isDashboard && user ? (
               <>
-                <Link href="/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-purple-50 rounded-md">
+                <Link 
+                  href="/dashboard" 
+                  className="block px-3 py-2 text-gray-700 rounded-md transition-colors"
+                  style={pathname === '/dashboard' ? { backgroundColor: '#98D2FA20', color: '#156CAF' } : {}}
+                  onMouseEnter={(e) => { if (pathname !== '/dashboard') e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
+                  onMouseLeave={(e) => { if (pathname !== '/dashboard') e.currentTarget.style.backgroundColor = 'transparent'; }}
+                >
                   My Dashboard
                 </Link>
                 {user.role === 'admin' && (
-                  <Link href="/dashboard/admin" className="block px-3 py-2 text-gray-700 hover:bg-purple-50 rounded-md">
+                  <Link 
+                    href="/dashboard/admin" 
+                    className="block px-3 py-2 text-gray-700 rounded-md transition-colors"
+                    style={pathname?.startsWith('/dashboard/admin') ? { backgroundColor: '#98D2FA20', color: '#156CAF' } : {}}
+                    onMouseEnter={(e) => { if (!pathname?.startsWith('/dashboard/admin')) e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
+                    onMouseLeave={(e) => { if (!pathname?.startsWith('/dashboard/admin')) e.currentTarget.style.backgroundColor = 'transparent'; }}
+                  >
                     Admin Panel
                   </Link>
                 )}
                 {user.role === 'caregiver' && (
-                  <Link href="/dashboard/caregiver" className="block px-3 py-2 text-gray-700 hover:bg-purple-50 rounded-md">
+                  <Link 
+                    href="/dashboard/caregiver" 
+                    className="block px-3 py-2 text-gray-700 rounded-md transition-colors"
+                    style={pathname?.startsWith('/dashboard/caregiver') ? { backgroundColor: '#98D2FA20', color: '#156CAF' } : {}}
+                    onMouseEnter={(e) => { if (!pathname?.startsWith('/dashboard/caregiver')) e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
+                    onMouseLeave={(e) => { if (!pathname?.startsWith('/dashboard/caregiver')) e.currentTarget.style.backgroundColor = 'transparent'; }}
+                  >
                     Caregiver Dashboard
                   </Link>
                 )}
               </>
             ) : (
               <>
-                <Link href="/care" className="block px-3 py-2 text-gray-700 hover:bg-purple-50 rounded-md">
+                <Link 
+                  href="/care" 
+                  className="block px-3 py-2 text-gray-700 rounded-md transition-colors"
+                  style={pathname?.startsWith('/care') ? { backgroundColor: '#98D2FA20', color: '#156CAF' } : {}}
+                  onMouseEnter={(e) => { if (!pathname?.startsWith('/care')) e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
+                  onMouseLeave={(e) => { if (!pathname?.startsWith('/care')) e.currentTarget.style.backgroundColor = 'transparent'; }}
+                >
                   Care Services
                 </Link>
-                <Link href="/academy" className="block px-3 py-2 text-gray-700 hover:bg-purple-50 rounded-md">
+                <Link 
+                  href="/academy" 
+                  className="block px-3 py-2 text-gray-700 rounded-md transition-colors"
+                  style={pathname?.startsWith('/academy') ? { backgroundColor: '#98D2FA20', color: '#156CAF' } : {}}
+                  onMouseEnter={(e) => { if (!pathname?.startsWith('/academy')) e.currentTarget.style.backgroundColor = '#f3f4f6'; }}
+                  onMouseLeave={(e) => { if (!pathname?.startsWith('/academy')) e.currentTarget.style.backgroundColor = 'transparent'; }}
+                >
                   Academy
                 </Link>
               </>
             )}
             {user ? (
               <>
-                <Link href="/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-purple-50 rounded-md">
+                <Link 
+                  href="/dashboard" 
+                  className="block px-3 py-2 text-gray-700 rounded-md transition-colors"
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
                   Dashboard
                 </Link>
-                <Link href="/profile" className="flex items-center space-x-3 px-3 py-2 hover:bg-purple-50 rounded-md">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white font-semibold text-xs shadow-md">
+                <Link href="/profile" className="flex items-center space-x-3 px-3 py-2 rounded-md transition-colors"
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-xs shadow-md" style={{ background: 'linear-gradient(135deg, #156CAF 0%, #0d5a94 100%)' }}>
                     {getInitials(user.full_name || 'User')}
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-gray-900">{user.full_name}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 w-fit">{user.role}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full text-white w-fit" style={{ backgroundColor: '#156CAF' }}>{user.role}</span>
                   </div>
                 </Link>
                 <button
@@ -299,10 +371,21 @@ export default function Navigation() {
               </>
             ) : (
               <>
-                <Link href="/auth/signin" className="block px-3 py-2 text-gray-700 hover:bg-purple-50 rounded-md">
+                <Link 
+                  href="/auth/signin" 
+                  className="block px-3 py-2 text-gray-700 rounded-md transition-colors"
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
                   Sign In
                 </Link>
-                <Link href="/auth/signup" className="block px-3 py-2 text-white bg-purple-600 hover:bg-purple-700 rounded-md mt-2 text-center shadow-sm">
+                <Link 
+                  href="/auth/signup" 
+                  className="block px-3 py-2 text-white rounded-md mt-2 text-center shadow-sm transition-colors"
+                  style={{ backgroundColor: '#156CAF' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0d5a94'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#156CAF'}
+                >
                   Sign Up
                 </Link>
               </>

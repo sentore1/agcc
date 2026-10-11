@@ -627,7 +627,7 @@ export default function CourseEditorPage({ params }: { params: Promise<{ id: str
 
                   <p className="text-xs text-gray-500">PNG, JPG, GIF or WebP · max 5 MB</p>
                   {featuredImagePreview && (
-                    <p className="text-xs text-amber-600 font-medium">New image selected — click Save Changes to upload.</p>
+                    <p className="text-xs text-amber-600 font-medium">New image selectedclick Save Changes to upload.</p>
                   )}
                 </div>
               </div>
@@ -1427,7 +1427,7 @@ export default function CourseEditorPage({ params }: { params: Promise<{ id: str
                         </svg>
                         <span className="text-blue-600 font-medium hover:text-blue-700">Click to upload</span>
                         <span className="text-gray-500"> or drag and drop</span>
-                        <p className="text-xs text-gray-400 mt-1">PDF, DOC, DOCX, PPT, images, videos — up to 50 MB</p>
+                        <p className="text-xs text-gray-400 mt-1">PDF, DOC, DOCX, PPT, images, videosup to 50 MB</p>
                       </label>
                     )}
                     <input
@@ -1609,9 +1609,9 @@ export default function CourseEditorPage({ params }: { params: Promise<{ id: str
                         <span className="text-blue-600 font-medium hover:text-blue-700">Click to upload</span>
                         <span className="text-gray-500"> or drag and drop</span>
                         <p className="text-xs text-gray-400 mt-1">
-                          {courseResourceForm.resource_type === 'pdf' && 'PDF files — up to 50 MB'}
-                          {courseResourceForm.resource_type === 'document' && 'DOC, DOCX, XLS, XLSX, PPT, PPTX — up to 50 MB'}
-                          {courseResourceForm.resource_type === 'other' && 'PNG, JPG, GIF, WebP — up to 10 MB'}
+                          {courseResourceForm.resource_type === 'pdf' && 'PDF filesup to 50 MB'}
+                          {courseResourceForm.resource_type === 'document' && 'DOC, DOCX, XLS, XLSX, PPT, PPTXup to 50 MB'}
+                          {courseResourceForm.resource_type === 'other' && 'PNG, JPG, GIF, WebPup to 10 MB'}
                         </p>
                       </label>
                     )}

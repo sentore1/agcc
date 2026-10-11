@@ -24,7 +24,7 @@ A comprehensive modular web platform combining care management and learning mana
 - Booking status tracking
 - Client dashboard integration
 
-#### 3. Division B - Igeno Gate Academy
+#### 3. Division B - AGCC Rwanda Academy
 - Academy landing page
 - Course catalog with filtering
 - Course categories

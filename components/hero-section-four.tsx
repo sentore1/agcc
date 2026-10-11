@@ -30,18 +30,16 @@ export default function HeroSection() {
 
                             <div className="relative mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl bg-black/10 md:mt-20">
                                 <img
-                                    src="https://images.unsplash.com/photo-1637055972140-64608c1abe53?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                    alt=""
+                                    src="/hero-section-image.jpg"
+                                    alt="Hero background"
                                     className="absolute inset-0 size-full object-cover"
                                 />
 
                                 <div className="bg-background rounded-(--radius) relative m-4 overflow-hidden border border-transparent shadow-xl shadow-black/15 ring-1 ring-black/10 sm:m-8 md:m-12">
-                                    <Image
-                                        src="/mist/tailark-2.png"
+                                    <img
+                                        src="/second-section-image.jpg"
                                         alt="app screen"
-                                        width="2880"
-                                        height="1842"
-                                        className="object-top-left size-full object-cover"
+                                        className="size-full object-cover object-top"
                                     />
                                 </div>
                             </div>

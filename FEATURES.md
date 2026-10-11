@@ -37,7 +37,7 @@
 - Revenue reports
 - Client satisfaction metrics
 
-## Division B – Igeno Gate Academy (LMS)
+## Division B – AGCC Rwanda Academy (LMS)
 
 ### Course Management
 - **Course Catalog**: Browse and filter courses

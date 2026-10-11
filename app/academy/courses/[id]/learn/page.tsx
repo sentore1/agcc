@@ -132,7 +132,7 @@ export default function LearnPage({ params }: { params: Promise<{ id: string }> 
       blockers.push(`${failedRequired.length} required quiz${failedRequired.length > 1 ? 'zes' : ''} not yet passed`);
     }
 
-    // Check lesson quizzes — all lesson quizzes are treated as required
+    // Check lesson quizzesall lesson quizzes are treated as required
     const allLessonQuizIds = lessonQuizzes.map((q: any) => q.id);
     const failedLessonQuizzes = allLessonQuizIds.filter((qid: string) => !passedQuizIds.has(qid));
     if (failedLessonQuizzes.length > 0) {
@@ -621,7 +621,7 @@ export default function LearnPage({ params }: { params: Promise<{ id: string }> 
                 ) : (
                   <button
                     onClick={async () => {
-                      if (completionBlockers.length > 0) return; // guard — button disabled anyway
+                      if (completionBlockers.length > 0) return; // guardbutton disabled anyway
                       await updateProgress(activeIdx);
                       const completedAt = new Date().toISOString();
                       await supabase.from('enrollments').update({

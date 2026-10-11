@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
+import ConditionalHeader from "@/components/ConditionalHeader";
 
 export const metadata: Metadata = {
-  title: "Care & Igeno Platform",
-  description: "Integrated Care Management and Learning Platform",
+  title: "AGCC Rwandad - Compassionate Care for Every Stage of Life",
+  description: "Professional in-home healthcare services and caregiver training - Trusted care you can rely on",
   icons: { icon: "/favlogo.png" },
 };
 
@@ -15,8 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="font-sans">
-      <body className="antialiased bg-gray-50">
-        <Navigation />
+      <body className="antialiased bg-white">
+        <ConditionalHeader />
         <main>
           {children}
         </main>

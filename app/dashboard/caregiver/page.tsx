@@ -357,13 +357,13 @@ export default function CaregiverDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4" style={{ borderColor: '#694EAB' }}>
+        <div className="bg-white rounded-lg shadow-md p-6 border-l-4" style={{ borderColor: '#267ABA' }}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium mb-1" style={{ color: '#694EAB' }}>Upcoming</p>
-              <p className="text-3xl font-bold" style={{ color: '#694EAB' }}>{stats.upcomingCount}</p>
+              <p className="text-sm font-medium mb-1" style={{ color: '#267ABA' }}>Upcoming</p>
+              <p className="text-3xl font-bold" style={{ color: '#267ABA' }}>{stats.upcomingCount}</p>
             </div>
-            <div className="p-2 rounded-2xl shadow-md" style={{ backgroundColor: '#694EAB' }}>
+            <div className="p-2 rounded-2xl shadow-md" style={{ backgroundColor: '#267ABA' }}>
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>

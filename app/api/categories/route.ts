@@ -22,7 +22,7 @@ async function createSupabaseServer() {
   );
 }
 
-// GET /api/categories — public, returns all active categories ordered by order_index
+// GET /api/categoriespublic, returns all active categories ordered by order_index
 export async function GET() {
   try {
     const supabase = await createSupabaseServer();
@@ -40,7 +40,7 @@ export async function GET() {
   }
 }
 
-// POST /api/categories — admin only, create a new category
+// POST /api/categoriesadmin only, create a new category
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createSupabaseServer();
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PATCH /api/categories — admin only, update a category (rename, reorder, toggle active)
+// PATCH /api/categoriesadmin only, update a category (rename, reorder, toggle active)
 export async function PATCH(request: NextRequest) {
   try {
     const supabase = await createSupabaseServer();
@@ -162,7 +162,7 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
-// DELETE /api/categories — admin only, soft-delete (deactivate) or hard-delete a category
+// DELETE /api/categoriesadmin only, soft-delete (deactivate) or hard-delete a category
 export async function DELETE(request: NextRequest) {
   try {
     const supabase = await createSupabaseServer();
@@ -191,7 +191,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     if (force) {
-      // Hard delete — only safe if no courses use this category
+      // Hard deleteonly safe if no courses use this category
       const { count } = await supabase
         .from('courses')
         .select('id', { count: 'exact', head: true })
@@ -207,7 +207,7 @@ export async function DELETE(request: NextRequest) {
       const { error } = await supabase.from('course_categories').delete().eq('id', id);
       if (error) throw error;
     } else {
-      // Soft delete — just deactivate
+      // Soft deletejust deactivate
       const { error } = await supabase
         .from('course_categories')
         .update({ is_active: false })

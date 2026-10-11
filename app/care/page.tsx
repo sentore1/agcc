@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
+import FooterSection from '@/components/footer';
 
 const steps = [
   { num: '1', title: 'Register', desc: 'Create your account and profile' },
@@ -21,13 +22,14 @@ export default async function CarePage() {
     <main>
       {/* Hero */}
       <section className="overflow-hidden">
-        <div className="py-20 md:py-36">
+        <div className="py-20 pt-32 md:py-36 md:pt-44">
           <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
             <h1 className="mx-auto max-w-2xl text-balance text-4xl font-bold md:text-5xl">
-              Care & Family Wellness
+              AGCR Care Services
             </h1>
             <p className="text-muted-foreground mx-auto my-6 max-w-xl text-balance text-xl">
-              Professional care services for your loved ones, delivered with compassion and expertise.
+              Retirement house and care center providing professional caregiving for all generations. 
+              Care available at our facility, at home, or in hospitaltailored to your medical needs.
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button size="lg" render={<Link href="/care/booking" />} nativeButton={false}>
@@ -42,12 +44,12 @@ export default async function CarePage() {
       </section>
 
       {/* Services */}
-      <section className="border-t">
+      <section className="bg-white">
         <div className="mx-auto max-w-5xl px-6 py-16">
           <h2 className="mb-10 text-center text-2xl font-semibold">Our Care Services</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {(services ?? []).map((s) => (
-              <Link key={s.id} href="/care/booking" className="rounded-xl border p-5 transition-shadow hover:shadow-md block">
+              <Link key={s.id} href="/care/booking" className="rounded-xl p-5 transition-shadow hover:shadow-md block">
                 <h3 className="mb-1 font-semibold">{s.name}</h3>
                 <p className="text-muted-foreground text-sm">{s.description}</p>
               </Link>
@@ -57,7 +59,7 @@ export default async function CarePage() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-muted/40 border-t border-b">
+      <section className="bg-white">
         <div className="mx-auto max-w-5xl px-6 py-16">
           <h2 className="mb-10 text-center text-2xl font-semibold">How It Works</h2>
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
@@ -87,6 +89,9 @@ export default async function CarePage() {
           </Button>
         </div>
       </section>
+
+      {/* Footer */}
+      <FooterSection />
     </main>
   );
 }

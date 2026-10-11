@@ -5,7 +5,7 @@ A modular web platform with two main divisions:
 ## Division A – Care & Family Wellness
 Complete care management system with client registration, booking, caregiver assignment, scheduling, and reporting.
 
-## Division B – Igeno Gate Academy
+## Division B – AGCC Rwanda Academy
 Learning Management System (LMS) with courses, videos, quizzes, certificates, and career resources.
 
 ## Features

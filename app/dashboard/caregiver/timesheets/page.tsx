@@ -22,7 +22,7 @@ interface TimesheetEntry {
   check_out_notes: string | null;
   total_hours: number | null;
   work_description: string | null;
-  tasks_completed: string[] | null;
+  tasks_completed: string[] | string | null; // Can be array or JSON string
   client_feedback: string | null;
   status: string;
   bookings: {
@@ -128,6 +128,24 @@ export default function CaregiverTimesheetsPage() {
     const h = Math.floor(hours);
     const m = Math.round((hours - h) * 60);
     return `${h}h ${m}m`;
+  };
+
+  const parseTasksCompleted = (tasks: string[] | string | null): string[] => {
+    if (!tasks) return [];
+    if (Array.isArray(tasks)) return tasks;
+    
+    // If it's a string, try to parse as JSON
+    if (typeof tasks === 'string') {
+      try {
+        const parsed = JSON.parse(tasks);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        // If not JSON, treat as comma-separated or single task
+        return tasks.includes(',') ? tasks.split(',').map(t => t.trim()) : [tasks];
+      }
+    }
+    
+    return [];
   };
 
   if (loading && !caregiver) {
@@ -323,11 +341,11 @@ export default function CaregiverTimesheetsPage() {
                       </div>
                     )}
 
-                    {timesheet.tasks_completed && timesheet.tasks_completed.length > 0 && (
+                    {timesheet.tasks_completed && parseTasksCompleted(timesheet.tasks_completed).length > 0 && (
                       <div className="mb-3">
                         <p className="text-xs text-gray-500 mb-2">Tasks Completed</p>
                         <div className="flex flex-wrap gap-2">
-                          {timesheet.tasks_completed.map((task, idx) => (
+                          {parseTasksCompleted(timesheet.tasks_completed).map((task, idx) => (
                             <span key={idx} className="px-2 py-1 text-white text-xs rounded-full" style={{ backgroundColor: '#1481BA' }}>
                               {task}
                             </span>

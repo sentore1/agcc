@@ -75,9 +75,9 @@ export async function POST(request: NextRequest) {
     let isExistingUser = false;
 
     if (existingAuthUser) {
-      // User already exists in auth — reuse their account
+      // User already exists in authreuse their account
       userId = existingAuthUser.id;
-      pin = '(existing account — user keeps their current password)';
+      pin = '(existing accountuser keeps their current password)';
       isExistingUser = true;
 
       // Update their role to caregiver in profile
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
         .update({ role: 'caregiver', full_name: full_name })
         .eq('id', userId);
     } else {
-      // New user — create auth account
+      // New usercreate auth account
       pin = generatePIN();
       const { data: authUser, error: authError } = await supabaseAdmin.auth.admin.createUser({
         email,

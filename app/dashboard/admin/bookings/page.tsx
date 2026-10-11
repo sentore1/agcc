@@ -73,9 +73,15 @@ export default function BookingsManagement() {
       query = query.eq('status', filter);
     }
 
-    const { data, error } = await query.order('scheduled_date', { ascending: false });
+    const { data, error } = await query.order('scheduled_date', { ascending: false }).order('created_at', { ascending: false });
 
-    if (data) setBookings(data);
+    if (data) {
+      const { data: serviceTypes } = await supabase.from('service_types').select('id, name');
+      setBookings(data.map((b: any) => {
+        const match = serviceTypes?.find((s: any) => s.id === b.service_type);
+        return { ...b, service_type: match ? match.name : b.service_type };
+      }));
+    }
     setLoading(false);
   };
 

@@ -4,13 +4,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createBrowserClient } from '@/lib/supabase-client';
-import { UserRole } from '@/lib/types';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
-  const [role, setRole] = useState<UserRole>('client');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,7 +29,7 @@ export default function SignUp() {
         options: {
           data: {
             full_name: fullName,
-            role,
+            role: 'client',
           },
           emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
         }
@@ -39,12 +37,34 @@ export default function SignUp() {
 
       if (authError) throw authError;
 
-      // Check if email confirmation is required
+      // Submit pending booking via API route (uses service role, not browser session)
+      const submitPendingBooking = async (userId: string) => {
+        const pending = sessionStorage.getItem('pendingBooking');
+        if (!pending) return;
+        try {
+          const booking = JSON.parse(pending);
+          const res = await fetch('/api/submit-booking', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, fullName, email, booking }),
+          });
+          if (res.ok) sessionStorage.removeItem('pendingBooking');
+        } catch (err) {
+          console.error('Failed to submit pending booking:', err);
+        }
+      };
+
       if (authData.user && !authData.session) {
-        setSuccess('Account created! Please check your email to confirm your account before signing in.');
-      } else {
-        // User is automatically signed in (email confirmation disabled)
-        setSuccess('Account created successfully! Redirecting...');
+        // Email confirmation requiredbooking will be submitted on dashboard load
+        const hasPending = !!sessionStorage.getItem('pendingBooking');
+        setSuccess(
+          hasPending
+            ? 'booking_pending_confirmation'
+            : 'email_confirmation'
+        );
+      } else if (authData.user && authData.session) {
+        await submitPendingBooking(authData.user.id);
+        setSuccess('success');
         setTimeout(() => {
           router.push('/dashboard');
           router.refresh();
@@ -71,15 +91,32 @@ export default function SignUp() {
             </Link>
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit} style={{ display: success && success !== 'success' ? 'none' : undefined }}>
           {error && (
             <div className="rounded-md bg-red-50 p-4">
               <div className="text-sm text-red-800">{error}</div>
             </div>
           )}
-          {success && (
+          {success === 'email_confirmation' && (
+            <div className="rounded-md bg-green-50 border border-green-200 p-6 text-center">
+              <div className="text-green-600 text-4xl mb-3">✓</div>
+              <h3 className="font-bold text-green-800 text-lg mb-2">Account Created!</h3>
+              <p className="text-sm text-green-700 mb-4">Please check your email and click the confirmation link to activate your account.</p>
+              <Link href="/auth/signin" className="inline-block px-4 py-2 bg-green-600 text-white rounded-md text-sm font-semibold hover:bg-green-700">Go to Sign In</Link>
+            </div>
+          )}
+          {success === 'booking_pending_confirmation' && (
+            <div className="rounded-md border p-6 text-center" style={{ backgroundColor: '#F1FCFF', borderColor: '#91CBF1' }}>
+              <div className="text-4xl mb-3">📧</div>
+              <h3 className="font-bold text-gray-900 text-lg mb-2">Almost there!</h3>
+              <p className="text-sm text-gray-700 mb-2">Your account has been created and your <strong>booking request has been saved</strong>.</p>
+              <p className="text-sm text-gray-600 mb-4">Check your email, confirm your account, and your booking will be automatically submitted when you sign in.</p>
+              <Link href="/auth/signin" className="inline-block px-4 py-2 text-white rounded-md text-sm font-semibold" style={{ backgroundColor: '#267ABA' }}>Go to Sign In</Link>
+            </div>
+          )}
+          {success === 'success' && (
             <div className="rounded-md bg-green-50 p-4">
-              <div className="text-sm text-green-800">{success}</div>
+              <div className="text-sm text-green-800">Account created successfully! Redirecting...</div>
             </div>
           )}
           <div className="space-y-4">
@@ -131,27 +168,7 @@ export default function SignUp() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                I am a...
-              </label>
-              <select
-                id="role"
-                name="role"
-                required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                value={role}
-                onChange={(e) => setRole(e.target.value as UserRole)}
-              >
-                <option value="client">Client (Care Services)</option>
-                <option value="caregiver">Caregiver</option>
-                <option value="nurse">Nurse</option>
-                <option value="consultant">Consultant</option>
-                <option value="student">Student (Academy)</option>
-                <option value="trainer">Trainer/Instructor</option>
-                <option value="admin">Administrator</option>
-              </select>
-            </div>
+
           </div>
 
           <div>
