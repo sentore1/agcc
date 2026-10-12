@@ -178,9 +178,6 @@ export default function Navigation() {
                       <Link
                         href="/profile"
                         className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:text-gray-900 transition-colors"
-                        style={{ 
-                          '&:hover': { backgroundColor: '#98D2FA20' }
-                        }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#98D2FA20'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       >

@@ -456,7 +456,7 @@ export default function AdminTimesheetsPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">Tasks Completed</h3>
                     <div className="grid md:grid-cols-2 gap-2">
-                      {tasks.map((task, idx) => (
+                      {tasks.map((task: string, idx: number) => (
                         <div key={idx} className="flex items-center bg-green-50 p-2 rounded">
                           <svg className="w-5 h-5 text-green-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

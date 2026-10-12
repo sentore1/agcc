@@ -9,8 +9,8 @@ interface ServiceType {
   id: string;
   name: string;
   description: string | null;
-  price_per_hour: number | null;
-  price_per_day: number | null;
+  price_per_hour?: number | null;
+  price_per_day?: number | null;
 }
 
 export default function ServicesSection() {

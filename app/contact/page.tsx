@@ -134,8 +134,7 @@ export default function ContactPage() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 transition-all"
-                  style={{ focusRingColor: '#267ABA' }}
+                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   placeholder="Your name"
                   required
                 />
@@ -149,8 +148,7 @@ export default function ContactPage() {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 transition-all"
-                  style={{ focusRingColor: '#267ABA' }}
+                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   placeholder="your.email@example.com"
                   required
                 />
@@ -164,8 +162,7 @@ export default function ContactPage() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 transition-all"
-                  style={{ focusRingColor: '#267ABA' }}
+                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   placeholder="+250 XXX XXX XXX"
                 />
               </div>
@@ -178,8 +175,7 @@ export default function ContactPage() {
                   id="message"
                   name="message"
                   rows={5}
-                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 transition-all resize-none"
-                  style={{ focusRingColor: '#267ABA' }}
+                  className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
                   placeholder="How can we help you?"
                   required
                 />

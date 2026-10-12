@@ -126,8 +126,7 @@ export default function Home() {
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                         placeholder="Your name"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 transition-all text-gray-900 text-sm"
-                        style={{ focusRingColor: '#267ABA' }}
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 text-sm"
                         required
                       />
                     </div>
@@ -143,8 +142,7 @@ export default function Home() {
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
                         placeholder="+250 XXX XXX XXX"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 transition-all text-gray-900 text-sm"
-                        style={{ focusRingColor: '#267ABA' }}
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 text-sm"
                         required
                       />
                     </div>
@@ -159,8 +157,7 @@ export default function Home() {
                       name="service"
                       value={formData.service}
                       onChange={(e) => setFormData({...formData, service: e.target.value})}
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 transition-all text-gray-900 bg-white text-sm"
-                      style={{ focusRingColor: '#267ABA' }}
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 bg-white text-sm"
                       required
                       disabled={loadingServices}
                     >
