@@ -27,7 +27,7 @@ export default function HeroSection() {
   }, [slides.length]);
 
   return (
-    <section className="relative bg-white pt-32 pb-0">
+    <section className="relative bg-white pt-20 sm:pt-32 pb-0">
       <style jsx>{`
         @keyframes fadeInUp {
           from {
@@ -46,11 +46,11 @@ export default function HeroSection() {
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Content - Text Section */}
-        <div className="grid lg:grid-cols-2 gap-12 pb-12">
+        <div className="grid lg:grid-cols-2 gap-3 sm:gap-8 lg:gap-12 pb-3 sm:pb-8 lg:pb-12">
           {/* Left - Heading */}
-          <div className="pt-8">
+          <div className="pt-0 sm:pt-4 lg:pt-8">
             <h1 
-              className={`text-4xl sm:text-5xl lg:text-[3rem] font-normal leading-[1.1] text-gray-900 ${mounted ? 'animate-fadeInUp' : 'opacity-0'}`}
+              className={`text-3xl sm:text-4xl lg:text-5xl xl:text-[3rem] font-normal leading-[1.1] text-gray-900 ${mounted ? 'animate-fadeInUp' : 'opacity-0'}`}
             >
               All Generations<br />
               <span className="font-semibold">Care & Companionship</span>
@@ -58,14 +58,14 @@ export default function HeroSection() {
           </div>
 
           {/* Right - Description & CTA */}
-          <div className="pt-8 flex flex-col justify-start">
-            <p className="text-sm text-gray-600 leading-relaxed mb-6 max-w-md">
+          <div className="pt-0 lg:pt-8 flex flex-col justify-start">
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-3 sm:mb-6 max-w-md">
               Professional care services for seniors, children, and families in Rwanda. 
               Compassionate support at home or in hospital, tailored to your loved one's medical condition and needs.
             </p>
             <Link
               href="/care/booking"
-              className="group inline-flex items-center justify-center gap-2 w-fit rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all"
+              className="group inline-flex items-center justify-center gap-2 w-full sm:w-fit rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all"
               style={{ backgroundColor: '#267ABA' }}
             >
               <span>Request a Caregiver</span>
@@ -80,7 +80,7 @@ export default function HeroSection() {
         <div className="relative">
           {/* Large Background Image Card with Slider */}
           <div className="relative bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl overflow-hidden shadow-xl">
-            <div className="aspect-[21/9] relative">
+            <div className="aspect-[16/9] sm:aspect-[21/9] relative">
               {/* Slider Images */}
               {slides.map((slide, index) => (
                 <div
@@ -103,14 +103,14 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-black/20" />
 
               {/* Slider Dots */}
-              <div className="absolute bottom-6 right-6 flex gap-2 z-10">
+              <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 flex gap-2 z-10">
                 {slides.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
                     className={`w-2 h-2 rounded-full transition-all ${
                       index === currentSlide
-                        ? 'w-8 bg-white'
+                        ? 'w-6 sm:w-8 bg-white'
                         : 'bg-white/50 hover:bg-white/75'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
@@ -120,9 +120,9 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Overlaid Stats Card - Left Side */}
+          {/* Overlaid Stats Card - Hidden on mobile, visible on desktop */}
           <div 
-            className={`absolute left-8 lg:left-12 top-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl ${mounted ? 'animate-fadeInUp' : 'opacity-0'}`}
+            className={`hidden sm:block absolute left-8 lg:left-12 top-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl ${mounted ? 'animate-fadeInUp' : 'opacity-0'}`}
             style={{ animationDelay: '0.2s', width: '320px' }}
           >
             {/* Avatars with expand icon */}
