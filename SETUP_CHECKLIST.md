@@ -1,4 +1,4 @@
-# AGCR Setup Checklist
+# AGCC Setup Checklist
 
 Run these SQL scripts in Supabase SQL Editor in this order:
 

@@ -21,7 +21,7 @@ export default function HomeSupportPage() {
       <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="prose prose-lg max-w-none mb-12">
           <p className="text-gray-600 leading-relaxed text-center">
-            AGCR's home support services help individuals maintain independence and quality of life 
+            AGCC's home support services help individuals maintain independence and quality of life 
             by providing professional assistance with everyday household tasks, personal care, and medical support. 
             Our caregivers visit your home to deliver personalized care based on your medical condition and daily needs.
           </p>

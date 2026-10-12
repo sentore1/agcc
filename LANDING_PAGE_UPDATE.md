@@ -1,7 +1,7 @@
-# Landing Page Update - AGCR Branding
+# Landing Page Update - AGCC Branding
 
 ## Overview
-The landing page has been updated to reflect the **All Generations Care and Companionship Rwanda (AGCR)** brand and services.
+The landing page has been updated to reflect the **All Generations Care and Companionship Rwanda (AGCC)** brand and services.
 
 ## Key Changes Made
 
@@ -15,9 +15,9 @@ The landing page has been updated to reflect the **All Generations Care and Comp
 
 ### 2. Main Landing Page (`app/page.tsx`)
 
-#### About AGCR Section
+#### About AGCC Section
 - **New headline**: "Professional Care, Genuine Compassion, Family You Can Trust"
-- **Description**: Explains AGCR's mission for retirement homes, home care, and hospital care
+- **Description**: Explains AGCC's mission for retirement homes, home care, and hospital care
 - **Form updated**: "Request a Caregiver" with Rwanda phone format (+250)
 - **Service dropdown options**:
   - Elderly Care
@@ -37,7 +37,7 @@ Six comprehensive service cards with icons:
 6. **Post Hospital Recovery** - Post-surgical care and rehabilitation
 
 #### Professional Caregivers Section
-- **About AGCR**: Company description and mission statement
+- **About AGCC**: Company description and mission statement
 - **Care for Seniors** card with service details
 - **Why Choose Us** card highlighting:
   - Certified Caregivers
@@ -62,10 +62,10 @@ Six comprehensive service cards with icons:
   - Request a Caregiver
   - Contact Us
 
-- **Social media**: Instagram link prominently featured (https://www.instagram.com/agcr_rwanda)
+- **Social media**: Instagram link prominently featured (https://www.instagram.com/AGCC_rwanda)
 - **Footer text**: "All Generations Care and Companionship Rwanda"
 - **Service locations**: "Care at home | Care in hospital | 24/7 Support"
-- **Copyright**: "© 2025 AGCR - All Generations Care & Companionship Rwanda"
+- **Copyright**: "© 2025 AGCC - All Generations Care & Companionship Rwanda"
 
 ## Design Elements
 - **Color scheme**: Maintained #267ABA (primary blue) and complementary colors (#91CBF1, #C1E4F8)
@@ -85,7 +85,7 @@ The landing page now emphasizes:
 - ✅ Confidential client-company relationships
 
 ## Next Steps
-To fully complete the AGCR website, consider:
+To fully complete the AGCC website, consider:
 1. Create separate pages for each service type
 2. Add contract/confidentiality information page
 3. Create "About Us" page with company history
@@ -93,4 +93,4 @@ To fully complete the AGCR website, consider:
 5. Implement booking/request form functionality
 6. Add testimonials from families served
 7. Include caregiver profiles
-8. Create FAQ section specific to AGCR services
+8. Create FAQ section specific to AGCC services

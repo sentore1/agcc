@@ -93,7 +93,7 @@ export default function ApplyPage() {
               Application Submitted Successfully!
             </h1>
             <p className="text-gray-600 mb-8">
-              Thank you for applying to join our team at AGCR. We have received your application 
+              Thank you for applying to join our team at AGCC. We have received your application 
               and will review it shortly. We'll contact you via email or phone if your qualifications 
               match our current openings.
             </p>

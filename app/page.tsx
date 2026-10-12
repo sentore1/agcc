@@ -93,7 +93,7 @@ export default function Home() {
       {/* Hero Section - Full Width */}
       <HeroSection />
 
-      {/* About AGCR Section - Below Hero */}
+      {/* About AGCC Section - Below Hero */}
       <section className="py-20 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-br from-gray-100 to-white rounded-3xl overflow-hidden shadow-lg">
@@ -106,7 +106,7 @@ export default function Home() {
                   Family You Can Trust
                 </h2>
                 <p className="text-gray-600 mb-8 leading-relaxed">
-                  All Generations Care and Companionship Rwanda (AGCR) provides comprehensive caregiving services 
+                  All Generations Care and Companionship Rwanda (AGCC) provides comprehensive caregiving services 
                   for elderly individuals, children, and families. Our professional caregivers offer support at your home, 
                   in hospitals, or at our care centertailored to each patient's medical condition and needs. 
                   Every service is secured through a confidential contract.
@@ -388,7 +388,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: '#267ABA' }}>
-              About AGCR
+              About AGCC
             </p>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Compassionate Care<br />When You Need It Most
@@ -404,7 +404,7 @@ export default function Home() {
             {/* Care for Seniors Card */}
             <div className="rounded-2xl p-8 text-left" style={{ backgroundColor: '#267ABA' }}>
               <h3 className="text-xl font-bold text-white mb-3">
-                Care Services at AGCR
+                Care Services at AGCC
               </h3>
               <p className="text-sm text-white/90 mb-6">
                 We provide comprehensive care services with 24/7 medical monitoring, 
@@ -420,7 +420,7 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Why Choose AGCR */}
+            {/* Why Choose AGCC */}
             <div className="rounded-2xl p-8" style={{ backgroundColor: '#91CBF1' }}>
               <h3 className="text-2xl font-bold mb-6 text-gray-900">Why Choose Us?</h3>
               

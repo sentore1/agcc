@@ -21,7 +21,7 @@ export default function ChildrenCarePage() {
       <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="prose prose-lg max-w-none mb-12">
           <p className="text-gray-600 leading-relaxed text-center">
-            AGCR provides specialized care for children with medical conditions and special needs. 
+            AGCC provides specialized care for children with medical conditions and special needs. 
             Our caregivers are trained to support children at home, in hospital, or at our care center, 
             delivering compassionate assistance tailored to each child's health requirements. 
             All services are secured through a confidential contract with families.

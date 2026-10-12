@@ -1,4 +1,4 @@
-# New Pages Created for AGCR Website
+# New Pages Created for AGCC Website
 
 All footer links now have corresponding pages. Here's what was created:
 
@@ -6,7 +6,7 @@ All footer links now have corresponding pages. Here's what was created:
 
 ### 1. About Us (`/about`)
 **Location:** `app/about/page.tsx`
-- Mission statement explaining AGCR's purpose
+- Mission statement explaining AGCC's purpose
 - Four core values: Compassion, Trust, Excellence, Community
 - CTA buttons for requesting or becoming a caregiver
 - Minimalistic, clean design
@@ -68,7 +68,7 @@ All footer links now have corresponding pages. Here's what was created:
 
 All new pages follow these principles:
 - **Minimalistic design** - Clean, uncluttered layouts
-- **Consistent branding** - AGCR blue color scheme (#267ABA and variations)
+- **Consistent branding** - AGCC blue color scheme (#267ABA and variations)
 - **Icon-based sections** - Lucide icons for visual clarity
 - **Responsive** - Mobile-friendly grid layouts
 - **Clear CTAs** - Direct calls-to-action on every page

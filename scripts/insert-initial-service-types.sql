@@ -1,11 +1,11 @@
--- Insert Initial Service Types for AGCR
+-- Insert Initial Service Types for AGCC
 -- All Generations Care and Companionship Rwanda
 -- Run this script in Supabase SQL Editor to populate service types
 
 -- Clear existing data (optional - comment out if you want to keep existing data)
 -- TRUNCATE TABLE public.service_types RESTART IDENTITY CASCADE;
 
--- Insert service types based on AGCR services
+-- Insert service types based on AGCC services
 -- Columns: name, description, icon, is_active
 INSERT INTO public.service_types (name, description, icon, is_active)
 VALUES
@@ -107,7 +107,7 @@ FROM public.service_types;
 -- Success message
 DO $$
 BEGIN
-  RAISE NOTICE '✓ Successfully inserted % service types for AGCR!', (SELECT COUNT(*) FROM public.service_types);
+  RAISE NOTICE '✓ Successfully inserted % service types for AGCC!', (SELECT COUNT(*) FROM public.service_types);
   RAISE NOTICE '✓ Services available at home and in hospital';
   RAISE NOTICE '✓ Professional care for all generations';
 END $$;

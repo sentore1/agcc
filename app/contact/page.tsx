@@ -12,7 +12,7 @@ export default function ContactPage() {
       <section className="py-20 pt-32 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Contact AGCR
+            Contact AGCC
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
             Get in touch with our retirement house and care center team
@@ -77,7 +77,7 @@ export default function ContactPage() {
               <h3 className="font-semibold text-gray-900 mb-4">Follow Us</h3>
               <div className="flex gap-4">
                 <Link 
-                  href="https://www.instagram.com/agcr_rwanda" 
+                  href="https://www.instagram.com/AGCC_rwanda" 
                   target="_blank"
                   className="w-12 h-12 rounded-lg flex items-center justify-center transition-all hover:shadow-lg"
                   style={{ backgroundColor: '#267ABA' }}

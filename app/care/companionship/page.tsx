@@ -21,7 +21,7 @@ export default function CompanionshipPage() {
       <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="prose prose-lg max-w-none mb-12">
           <p className="text-gray-600 leading-relaxed text-center">
-            Loneliness can significantly impact physical and mental health. AGCR's companionship services 
+            Loneliness can significantly impact physical and mental health. AGCC's companionship services 
             provide emotional support, social interaction, and engaging activities for residents at our 
             retirement house, as well as for clients receiving care at home or in hospital. 
             These services enhance quality of life for individuals of all ages.

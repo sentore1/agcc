@@ -9,7 +9,7 @@ export default function AboutPage() {
       <section className="py-20 pt-32 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            About AGCR
+            About AGCC
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
             All Generations Care and Companionship Rwanda
@@ -22,7 +22,7 @@ export default function AboutPage() {
         <div className="prose prose-lg max-w-none">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
           <p className="text-gray-600 leading-relaxed mb-6">
-            All Generations Care and Companionship Rwanda (AGCR) is a retirement house and care center 
+            All Generations Care and Companionship Rwanda (AGCC) is a retirement house and care center 
             providing comprehensive caregiving services for all generations in Rwanda. We offer specialized 
             residential care in our retirement facility, as well as professional in-home and hospital caregiving 
             services tailored to each patient's medical condition and needs.
@@ -36,7 +36,7 @@ export default function AboutPage() {
           <p className="text-gray-600 leading-relaxed">
             We believe in professional care, genuine compassion, and building trust with families. 
             Our team is dedicated to ensuring comfort, safety, and dignity for every person we serve. 
-            Each caregiver relationship is governed by a confidential contract between the client and AGCR, 
+            Each caregiver relationship is governed by a confidential contract between the client and AGCC, 
             protecting privacy and establishing clear expectations.
           </p>
         </div>

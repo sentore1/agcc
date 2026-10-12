@@ -25,7 +25,7 @@ export default async function CarePage() {
         <div className="py-20 pt-32 md:py-36 md:pt-44">
           <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
             <h1 className="mx-auto max-w-2xl text-balance text-4xl font-bold md:text-5xl">
-              AGCR Care Services
+              AGCC Care Services
             </h1>
             <p className="text-muted-foreground mx-auto my-6 max-w-xl text-balance text-xl">
               Retirement house and care center providing professional caregiving for all generations. 
