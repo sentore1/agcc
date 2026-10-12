@@ -5,7 +5,6 @@ import ConditionalHeader from "@/components/ConditionalHeader";
 export const metadata: Metadata = {
   title: "AGCC Rwandad - Compassionate Care for Every Stage of Life",
   description: "Professional in-home healthcare services and caregiver training - Trusted care you can rely on",
-  icons: { icon: "/favlogo.png" },
 };
 
 export default function RootLayout({
