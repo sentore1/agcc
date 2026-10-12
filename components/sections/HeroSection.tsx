@@ -161,15 +161,15 @@ export default function HeroSection() {
               <div className="bg-gray-100 rounded-xl p-4 pt-8">
                 <div className="flex items-end justify-between gap-2.5 h-24 relative">
                   {[
-                    { year: '2020', height: '35%', value: '40' },
-                    { year: '2021', height: '50%', value: '95' },
-                    { year: '2022', height: '63%', value: '180' },
-                    { year: '2023', height: '78%', value: '270' },
-                    { year: '2024', height: '90%', value: '330' },
-                    { year: '2025', height: '100%', value: '372+', isActive: true },
+                    { label: 'Seniors', height: '85%', value: '215' },
+                    { label: 'Children', height: '45%', value: '82' },
+                    { label: 'Support', height: '30%', value: '45' },
+                    { label: 'Hospital', height: '55%', value: '98' },
+                    { label: 'Home', height: '78%', value: '187' },
+                    { label: 'Total', height: '100%', value: '372+', isActive: true },
                   ].map((bar, index) => (
-                    <div key={bar.year} className="flex-1 flex flex-col items-center relative">
-                      {/* Value Label - Shows only on last bar */}
+                    <div key={bar.label} className="flex-1 flex flex-col items-center relative">
+                      {/* Value Label - Shows only on active bar */}
                       {bar.isActive && (
                         <div 
                           className="absolute -top-10 left-1/2 -translate-x-1/2 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-md z-10" 
@@ -192,14 +192,14 @@ export default function HeroSection() {
                 </div>
               </div>
               
-              {/* Year Labels */}
+              {/* Service Type Labels */}
               <div className="flex justify-between text-[10px] text-gray-500 px-1">
-                <span>2020</span>
-                <span>2021</span>
-                <span>2022</span>
-                <span>2023</span>
-                <span>2024</span>
-                <span className="font-bold" style={{ color: '#267ABA' }}>2025</span>
+                <span>Seniors</span>
+                <span>Children</span>
+                <span>Support</span>
+                <span>Hospital</span>
+                <span>Home</span>
+                <span className="font-bold" style={{ color: '#267ABA' }}>Total</span>
               </div>
             </div>
           </div>

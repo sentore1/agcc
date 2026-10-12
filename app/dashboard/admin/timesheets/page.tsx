@@ -16,7 +16,7 @@ interface TimesheetEntry {
   check_out_notes: string | null;
   total_hours: number | null;
   work_description: string | null;
-  tasks_completed: string[] | null;
+  tasks_completed: string[] | string | null;
   client_feedback: string | null;
   status: string;
   reviewed_at: string | null;
@@ -446,21 +446,28 @@ export default function AdminTimesheetsPage() {
               )}
 
               {/* Tasks Completed */}
-              {selectedTimesheet.tasks_completed && selectedTimesheet.tasks_completed.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Tasks Completed</h3>
-                  <div className="grid md:grid-cols-2 gap-2">
-                    {selectedTimesheet.tasks_completed.map((task, idx) => (
-                      <div key={idx} className="flex items-center bg-green-50 p-2 rounded">
-                        <svg className="w-5 h-5 text-green-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-sm text-gray-700">{task}</span>
-                      </div>
-                    ))}
+              {selectedTimesheet.tasks_completed && (() => {
+                const tasks = Array.isArray(selectedTimesheet.tasks_completed) 
+                  ? selectedTimesheet.tasks_completed 
+                  : typeof selectedTimesheet.tasks_completed === 'string' 
+                    ? JSON.parse(selectedTimesheet.tasks_completed) 
+                    : [];
+                return tasks.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Tasks Completed</h3>
+                    <div className="grid md:grid-cols-2 gap-2">
+                      {tasks.map((task, idx) => (
+                        <div key={idx} className="flex items-center bg-green-50 p-2 rounded">
+                          <svg className="w-5 h-5 text-green-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className="text-sm text-gray-700">{task}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Client Feedback */}
               {selectedTimesheet.client_feedback && (

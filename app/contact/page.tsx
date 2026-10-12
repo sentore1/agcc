@@ -54,8 +54,11 @@ export default function ContactPage() {
                 <Mail className="w-5 h-5 text-gray-900 flex-shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                  <a href="mailto:info@agccrwanda.com" className="text-gray-600 hover:text-gray-900">
+                  <a href="mailto:info@agccrwanda.com" className="text-gray-600 hover:text-gray-900 block">
                     info@agccrwanda.com
+                  </a>
+                  <a href="mailto:agccrwanda@gmail.com" className="text-gray-600 hover:text-gray-900 block mt-1">
+                    agccrwanda@gmail.com
                   </a>
                   <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
                 </div>
@@ -65,9 +68,16 @@ export default function ContactPage() {
                 <MapPin className="w-5 h-5 text-gray-900 flex-shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Location</h3>
-                  <p className="text-gray-600">Kigali, Rwanda</p>
-                  <p className="text-sm text-gray-500 mt-1">Physical address in progress</p>
-                  <p className="text-xs text-gray-500 mt-1">Services available at our facility, at home, and in hospital</p>
+                  <a 
+                    href="https://maps.app.goo.gl/eznXzRTGoed47m939" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-gray-900 hover:underline"
+                  >
+                    8 KK 569 St, All Generations Care and Companionship (AGCC) Ltd
+                  </a>
+                  <p className="text-gray-600 mt-1">Kigali, Rwanda</p>
+                  <p className="text-xs text-gray-500 mt-2">Services available at our facility, at home, and in hospital</p>
                 </div>
               </div>
             </div>
