@@ -8,7 +8,7 @@
 -- 1. ADMIN USER
 DO $$
 DECLARE
-  new_user_email VARCHAR := 'ali@agccrwanda.com';
+  new_user_email VARCHAR := 'ali@agccr.com';
   new_user_name VARCHAR := 'Admin User';
   new_user_phone VARCHAR := '+250788000000';
   new_user_id UUID;
@@ -47,7 +47,7 @@ END $$;
 -- 2. CAREGIVER USER
 DO $$
 DECLARE
-  new_user_email VARCHAR := 'caregiver@agccrwanda.com';
+  new_user_email VARCHAR := 'caregiver@agccr.com';
   new_user_name VARCHAR := 'Caregiver User';
   new_user_phone VARCHAR := '+250788000001';
   new_user_id UUID;
@@ -86,7 +86,7 @@ END $$;
 -- 3. CLIENT USER
 DO $$
 DECLARE
-  new_user_email VARCHAR := 'client@agccrwanda.com';
+  new_user_email VARCHAR := 'client@agccr.com';
   new_user_name VARCHAR := 'Client User';
   new_user_phone VARCHAR := '+250788000002';
   new_user_id UUID;
@@ -133,7 +133,7 @@ SELECT
   p.created_at,
   '🔑 Password: Intore@1234' as login_info
 FROM profiles p
-WHERE p.email IN ('ali@agccrwanda.com', 'caregiver@agccrwanda.com', 'client@agccrwanda.com')
+WHERE p.email IN ('ali@agccr.com', 'caregiver@agccr.com', 'client@agccr.com')
 ORDER BY 
   CASE p.role
     WHEN 'admin' THEN 1
@@ -149,7 +149,7 @@ ORDER BY
 -- - Status: Email confirmed (ready to login)
 -- 
 -- Login credentials:
--- 1. ali@agccrwanda.com / Intore@1234 (Admin)
--- 2. caregiver@agccrwanda.com / Intore@1234 (Caregiver)
--- 3. client@agccrwanda.com / Intore@1234 (Client)
+-- 1. ali@agccr.com / Intore@1234 (Admin)
+-- 2. caregiver@agccr.com / Intore@1234 (Caregiver)
+-- 3. client@agccr.com / Intore@1234 (Client)
 -- ============================================

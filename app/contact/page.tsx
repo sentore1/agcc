@@ -54,8 +54,8 @@ export default function ContactPage() {
                 <Mail className="w-5 h-5 text-gray-900 flex-shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                  <a href="mailto:info@agccrwanda.com" className="text-gray-600 hover:text-gray-900 block">
-                    info@agccrwanda.com
+                  <a href="mailto:info@agccr.com" className="text-gray-600 hover:text-gray-900 block">
+                    info@agccr.com
                   </a>
                   <a href="mailto:agccrwanda@gmail.com" className="text-gray-600 hover:text-gray-900 block mt-1">
                     agccrwanda@gmail.com
