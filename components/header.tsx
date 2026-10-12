@@ -16,7 +16,8 @@ const menuItems = [
             { name: 'Child & Family Care', href: '/care/children' },
             { name: 'Companionship', href: '/care/companionship' },
             { name: 'Home Support', href: '/care/home-support' },
-            { name: 'Hospital Support, Patient Escort', href: '/care/hospital-support' },
+            { name: 'Hospital Support', href: '/care/hospital-support' },
+            { name: 'Patient Escort', href: '/care/patient-escort' },
         ]
     },
     { 

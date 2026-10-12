@@ -9,10 +9,10 @@ export default function HospitalSupportPage() {
       <section className="py-20 pt-32 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Hospital Support & Patient Escort Services
+            Hospital Support Services
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
-            Professional care and companionship during hospital stays and medical appointments
+            Professional bedside care and compassionate support during hospital stays
           </p>
         </div>
       </section>
@@ -21,10 +21,10 @@ export default function HospitalSupportPage() {
       <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="prose prose-lg max-w-none mb-12">
           <p className="text-gray-600 leading-relaxed text-center">
-            AGCC's hospital support and patient escort services provide compassionate care and reliable 
-            assistance during hospital stays, medical appointments, and treatments. Our trained caregivers 
-            ensure patients receive the support they need while maintaining dignity, comfort, and safety 
-            throughout their healthcare journey.
+            AGCC's hospital support services provide compassionate care and reliable assistance during 
+            hospital stays and medical treatments. Our trained caregivers ensure patients receive the 
+            support they need while maintaining dignity, comfort, and safety throughout their 
+            hospitalization journey.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export default function HospitalSupportPage() {
         <div className="grid md:grid-cols-2 gap-8">
           <div className="p-6 rounded-xl hover:shadow-lg transition-shadow">
             <Heart className="w-8 h-8 mb-4" style={{ color: '#267ABA' }} />
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Hospital Bedside Care</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">24/7 Bedside Care</h3>
             <p className="text-gray-600">
               Round-the-clock or scheduled support during hospital stays, including personal care, 
               companionship, and assistance with meals and comfort needs.
@@ -41,28 +41,28 @@ export default function HospitalSupportPage() {
 
           <div className="p-6 rounded-xl hover:shadow-lg transition-shadow">
             <Users className="w-8 h-8 mb-4" style={{ color: '#267ABA' }} />
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Patient Escort Services</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Patient Companionship</h3>
             <p className="text-gray-600">
-              Safe transportation accompaniment to and from medical appointments, treatments, 
-              and hospital visits with trained caregivers.
+              Emotional support and companionship during hospital stays, reducing anxiety and 
+              providing comfort through difficult times.
             </p>
           </div>
 
           <div className="p-6 rounded-xl hover:shadow-lg transition-shadow">
             <Clock className="w-8 h-8 mb-4" style={{ color: '#267ABA' }} />
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Medical Appointment Support</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Hospital Stay Monitoring</h3>
             <p className="text-gray-600">
-              Assistance during medical consultations, helping patients understand instructions, 
-              remembering medication schedules, and communicating with healthcare providers.
+              Continuous monitoring of patient needs, coordinating with hospital staff, and ensuring 
+              timely assistance with personal care and comfort requirements.
             </p>
           </div>
 
           <div className="p-6 rounded-xl hover:shadow-lg transition-shadow">
             <Shield className="w-8 h-8 mb-4" style={{ color: '#267ABA' }} />
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Post-Surgery Care</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Post-Surgery Hospital Care</h3>
             <p className="text-gray-600">
-              Specialized support following surgical procedures, ensuring proper recovery protocols, 
-              medication management, and patient comfort during the healing process.
+              Specialized bedside support following surgical procedures, ensuring proper recovery, 
+              medication management, and patient comfort during hospitalization.
             </p>
           </div>
         </div>
