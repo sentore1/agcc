@@ -226,7 +226,7 @@ export default function DashboardHeader() {
           <Link href="/" className="md:hidden">
             <Image
               src="/logo.png"
-              alt="AGCC Rwandad Logo"
+              alt="AGCC Rwanda Logo"
               width={120}
               height={40}
               className="h-10 w-auto"

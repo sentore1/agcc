@@ -15,7 +15,7 @@ Complete redesign of the AGCC landing page to match the professional healthcare 
 
 #### 1. **Header (Navigation)**
 - **Design**: Fixed, transparent → solid on scroll
-- **Logo**: Heart icon with "AGCC Rwandad" branding
+- **Logo**: Heart icon with "AGCC Rwanda" branding
 - **Navigation**: Center-aligned menu items
 - **CTA**: "Get Started" button (right-aligned)
 - **Mobile**: Hamburger menu with slide-down panel
@@ -139,7 +139,7 @@ Three-card layout:
 ### 🎯 Key Components Modified
 
 1. **`components/header.tsx`**
-   - Complete redesign with AGCC Rwandad branding
+   - Complete redesign with AGCC Rwanda branding
    - Center navigation pattern
    - Scroll-aware transparency
 
