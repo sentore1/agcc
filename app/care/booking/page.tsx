@@ -304,7 +304,7 @@ Phone: ${guestPhone}
 Email: ${guestEmail}
     `.trim();
     
-    const whatsappNumber = '+250788888888'; // Replace with your WhatsApp number
+    const whatsappNumber = '+250781204548'; // AGCC WhatsApp: +250 781 204 548
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
     

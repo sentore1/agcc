@@ -148,17 +148,45 @@ export default function AdminTimesheetsPage() {
   };
 
   const handleDownloadPDF = async () => {
-    const { default: jsPDF } = await import('jspdf');
-    const { default: html2canvas } = await import('html2canvas');
-    const element = document.getElementById('timesheet-pdf-content');
-    if (!element) return;
-    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`timesheet-${selectedTimesheet?.caregivers?.full_name?.replace(/\s+/g, '-') ?? 'report'}.pdf`);
+    try {
+      const { default: jsPDF } = await import('jspdf');
+      const { default: html2canvas } = await import('html2canvas');
+      
+      const element = document.getElementById('timesheet-pdf-content');
+      if (!element) {
+        alert('Could not find timesheet content to export');
+        return;
+      }
+
+      // Capture the content as canvas
+      const canvas = await html2canvas(element, { 
+        scale: 2, 
+        useCORS: true,
+        logging: false 
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
+      
+      // Create PDF
+      const pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4'
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      
+      // Generate filename
+      const caregiverName = selectedTimesheet?.caregivers?.full_name?.replace(/\s+/g, '-') || 'report';
+      const date = new Date().toISOString().split('T')[0];
+      pdf.save(`timesheet-${caregiverName}-${date}.pdf`);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Failed to generate PDF. Please try again.');
+    }
   };
 
   const formatDuration = (hours: number | null) => {

@@ -137,7 +137,7 @@ export default function ReportsAnalytics() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600 mb-1">Total Revenue</p>
-              <p className="text-3xl font-bold text-green-600">${stats.revenueTotal.toFixed(2)}</p>
+              <p className="text-3xl font-bold text-green-600">RWF {stats.revenueTotal.toLocaleString()}</p>
               <p className="text-xs text-gray-500 mt-1">All time</p>
             </div>
             <div className="bg-green-100 p-3 rounded-full">
@@ -152,7 +152,7 @@ export default function ReportsAnalytics() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600 mb-1">This Month</p>
-              <p className="text-3xl font-bold text-blue-600">${stats.revenueThisMonth.toFixed(2)}</p>
+              <p className="text-3xl font-bold text-blue-600">RWF {stats.revenueThisMonth.toLocaleString()}</p>
               <p className="text-xs text-gray-500 mt-1">Current month revenue</p>
             </div>
             <div className="bg-blue-100 p-3 rounded-full">

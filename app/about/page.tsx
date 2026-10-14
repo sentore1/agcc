@@ -22,16 +22,16 @@ export default function AboutPage() {
         <div className="prose prose-lg max-w-none">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
           <p className="text-gray-600 leading-relaxed mb-6">
-            All Generations Care and Companionship Rwanda (AGCC) is a retirement house and care center 
-            providing comprehensive caregiving services for all generations in Rwanda. We offer specialized 
-            residential care in our retirement facility, as well as professional in-home and hospital caregiving 
-            services tailored to each patient's medical condition and needs.
+            All Generations Care and Companionship Rwanda (AGCC) is a professional caregiving service 
+            providing comprehensive care and companionship for all generations in Rwanda. We offer 
+            professional in-home and hospital caregiving services tailored to each patient's medical 
+            condition and needs.
           </p>
           <p className="text-gray-600 leading-relaxed mb-6">
             Whether caring for elderly individuals, children with special needs, or providing post-hospital 
             recovery support, our certified caregivers deliver compassionate, personalized care based on 
-            medical assessments. Services are available at our care center, in your home, or at the hospital
-            ensuring continuous support wherever you need it.
+            medical assessments. Services are available in your home or at the hospital, ensuring 
+            continuous support wherever you need it.
           </p>
           <p className="text-gray-600 leading-relaxed">
             We believe in professional care, genuine compassion, and building trust with families. 

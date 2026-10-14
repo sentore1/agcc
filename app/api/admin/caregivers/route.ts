@@ -75,9 +75,9 @@ export async function POST(request: NextRequest) {
     let isExistingUser = false;
 
     if (existingAuthUser) {
-      // User already exists in authreuse their account
+      // User already exists in auth - reuse their account
       userId = existingAuthUser.id;
-      pin = '(existing accountuser keeps their current password)';
+      pin = '(existing account - user keeps their current password)';
       isExistingUser = true;
 
       // Update their role to caregiver in profile
@@ -86,12 +86,12 @@ export async function POST(request: NextRequest) {
         .update({ role: 'caregiver', full_name: full_name })
         .eq('id', userId);
     } else {
-      // New usercreate auth account
+      // New user - create auth account with password they can use immediately
       pin = generatePIN();
       const { data: authUser, error: authError } = await supabaseAdmin.auth.admin.createUser({
         email,
         password: pin,
-        email_confirm: true,
+        email_confirm: true, // Mark email as already confirmed - no confirmation email needed
         user_metadata: { full_name, role: 'caregiver' },
       });
 
@@ -103,6 +103,8 @@ export async function POST(request: NextRequest) {
         );
       }
       userId = authUser.user.id;
+      
+      // Wait a moment for the database trigger to create the profile
       await new Promise(resolve => setTimeout(resolve, 100));
     }
 
