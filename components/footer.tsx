@@ -21,9 +21,9 @@ export default function FooterSection() {
             <div className="mx-auto max-w-5xl px-4 sm:px-6">
                 <Link href="/" aria-label="go home" className="mx-auto block w-fit">
                     <Image 
-                        src="/logo.png" 
-                        alt="Logo" 
-                        width={250} 
+                        src="/long logo.png" 
+                        alt="AGCC Logo" 
+                        width={320} 
                         height={80}
                         className="h-16 sm:h-20 w-auto"
                         priority

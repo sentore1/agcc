@@ -64,17 +64,14 @@ export const HeroHeader = () => {
                                 className="flex items-center gap-3 group"
                             >
                                 <Image
-                                    src="/logo.png"
-                                    alt="Logo"
+                                    src="/long logo.png"
+                                    alt="AGCC Logo"
                                     width={216}
                                     height={72}
                                     className="h-18 w-auto"
                                     priority
                                     unoptimized
                                 />
-                                <span className="text-xl font-semibold text-gray-800 hidden sm:block">
-                                    agccrwanda
-                                </span>
                             </Link>
 
                             <div className="hidden lg:flex items-center gap-1">

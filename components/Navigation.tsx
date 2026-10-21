@@ -82,7 +82,7 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/">
-              <Image src="/logo.png" alt="Logo" width={120} height={40} className="h-10 w-auto" priority />
+              <Image src="/long logo.png" alt="AGCC Logo" width={160} height={40} className="h-10 w-auto" priority />
             </Link>
           </div>
 
