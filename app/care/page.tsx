@@ -1,7 +1,17 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import FooterSection from '@/components/footer';
+
+const serviceImages: Record<string, string> = {
+  'Elderly Care': '/images/Elderly Care 1.jpg',
+  'Home Care': '/images/Home Care.jpg',
+  'Companionship': '/images/Companionship.jpg',
+  'Child Care': '/images/Child Care.jfif',
+  'Personal Assistance': '/images/Personal Assistance.webp',
+  'Post Hospital Recovery': '/images/Post Hospital Recovery.jfif',
+};
 
 const steps = [
   { num: '1', title: 'Register', desc: 'Create your account and profile' },
@@ -48,12 +58,22 @@ export default async function CarePage() {
         <div className="mx-auto max-w-5xl px-6 py-16">
           <h2 className="mb-10 text-center text-2xl font-semibold">Our Care Services</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {(services ?? []).map((s) => (
-              <Link key={s.id} href="/care/booking" className="rounded-xl p-5 transition-shadow hover:shadow-md block">
-                <h3 className="mb-1 font-semibold">{s.name}</h3>
-                <p className="text-muted-foreground text-sm">{s.description}</p>
-              </Link>
-            ))}
+            {(services ?? []).map((s) => {
+              const img = serviceImages[s.name];
+              return (
+                <Link key={s.id} href="/care/booking" className="rounded-xl overflow-hidden border border-gray-100 transition-shadow hover:shadow-md block">
+                  {img && (
+                    <div className="relative h-48 w-full">
+                      <Image src={img} alt={s.name} fill className="object-cover" />
+                    </div>
+                  )}
+                  <div className="p-5">
+                    <h3 className="mb-1 font-semibold">{s.name}</h3>
+                    <p className="text-muted-foreground text-sm">{s.description}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
