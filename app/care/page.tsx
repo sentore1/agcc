@@ -5,12 +5,12 @@ import { createServerSupabaseClient } from '@/lib/supabase-server';
 import FooterSection from '@/components/footer';
 
 const serviceImages: Record<string, string> = {
-  'Elderly Care': '/images/Elderly Care 1.jpg',
-  'Home Care': '/images/Home Care.jpg',
-  'Companionship': '/images/Companionship.jpg',
-  'Child Care': '/images/Child Care.jfif',
-  'Personal Assistance': '/images/Personal Assistance.webp',
-  'Post Hospital Recovery': '/images/Post Hospital Recovery.jfif',
+  'Elderly Care': '/images/elderly-care.jpg',
+  'Home Care': '/images/home-care.jpg',
+  'Companionship': '/images/companionship.jpg',
+  'Child Care': '/images/child-care.jpg',
+  'Personal Assistance': '/images/personal-assistance.webp',
+  'Post Hospital Recovery': '/images/post-hospital-recovery.jpg',
 };
 
 const steps = [

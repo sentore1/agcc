@@ -293,7 +293,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="relative h-48">
-                  <Image src="/images/Elderly Care 1.jpg" alt="Elderly Care" fill className="object-cover" />
+                  <Image src="/images/elderly-care.jpg" alt="Elderly Care" fill className="object-cover" />
                 </div>
               </div>
             </Link>
@@ -310,7 +310,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="relative h-48">
-                  <Image src="/images/Home Care.jpg" alt="Home Care" fill className="object-cover" />
+                  <Image src="/images/home-care.jpg" alt="Home Care" fill className="object-cover" />
                 </div>
               </div>
             </Link>
@@ -327,7 +327,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="relative h-48">
-                  <Image src="/images/Companionship.jpg" alt="Companionship" fill className="object-cover" />
+                  <Image src="/images/companionship.jpg" alt="Companionship" fill className="object-cover" />
                 </div>
               </div>
             </Link>
@@ -344,7 +344,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="relative h-48">
-                  <Image src="/images/Child Care.jfif" alt="Child Care" fill className="object-cover" />
+                  <Image src="/images/child-care.jpg" alt="Child Care" fill className="object-cover" />
                 </div>
               </div>
             </Link>
@@ -361,7 +361,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="relative h-48">
-                  <Image src="/images/Personal Assistance.webp" alt="Personal Assistance" fill className="object-cover" />
+                  <Image src="/images/personal-assistance.webp" alt="Personal Assistance" fill className="object-cover" />
                 </div>
               </div>
             </Link>
@@ -378,7 +378,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="relative h-48">
-                  <Image src="/images/Post Hospital Recovery.jfif" alt="Post Hospital Recovery" fill className="object-cover" />
+                  <Image src="/images/post-hospital-recovery.jpg" alt="Post Hospital Recovery" fill className="object-cover" />
                 </div>
               </div>
             </Link>
