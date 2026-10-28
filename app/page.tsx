@@ -281,105 +281,75 @@ export default function Home() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-10 sm:mb-12 lg:mb-16">
-            {/* Card 1: Elderly Care - Darkest Blue #267ABA */}
+            {/* Card 1: Elderly Care */}
             <Link href="/care/booking" className="group">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left h-full transition-all hover:shadow-xl" style={{ backgroundColor: '#267ABA' }}>
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left transition-all hover:shadow-xl" style={{ backgroundColor: '#267ABA' }}>
                 <div className="p-6 sm:p-7 lg:p-8">
                   <Users className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-white mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Elderly Care</h3>
-                  <p className="text-xs sm:text-sm text-white/90">
-                    Specialized care for seniors with medical monitoring, companionship, 
-                    and assistance with daily activities to maintain independence and dignity.
-                  </p>
+                  <p className="text-xs sm:text-sm text-white/90">Specialized care for seniors with medical monitoring, companionship, and assistance with daily activities to maintain independence and dignity.</p>
                 </div>
-                <div className="relative h-48">
-                  <Image src="/images/elderly-care.jpg" alt="Elderly Care" fill className="object-cover" />
-                </div>
+                <img src="/images/elderly-care.jpg" alt="Elderly Care" className="w-full h-48 object-cover" />
               </div>
             </Link>
 
-            {/* Card 2: Home Care - Blue Bell #5CA3D6 */}
+            {/* Card 2: Home Care */}
             <Link href="/care/booking" className="group">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left h-full transition-all hover:shadow-xl" style={{ backgroundColor: '#5CA3D6' }}>
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left transition-all hover:shadow-xl" style={{ backgroundColor: '#5CA3D6' }}>
                 <div className="p-6 sm:p-7 lg:p-8">
                   <HomeIcon className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-white mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Home Care</h3>
-                  <p className="text-xs sm:text-sm text-white/90">
-                    Professional in-home support including personal care, meal preparation, 
-                    medication reminders, and household assistance.
-                  </p>
+                  <p className="text-xs sm:text-sm text-white/90">Professional in-home support including personal care, meal preparation, medication reminders, and household assistance.</p>
                 </div>
-                <div className="relative h-48">
-                  <Image src="/images/home-care.jpg" alt="Home Care" fill className="object-cover" />
-                </div>
+                <img src="/images/home-care.jpg" alt="Home Care" className="w-full h-48 object-cover" />
               </div>
             </Link>
 
-            {/* Card 3: Companionship - Cool Sky #77B7E4 */}
+            {/* Card 3: Companionship */}
             <Link href="/care/booking" className="group">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left h-full transition-all hover:shadow-xl" style={{ backgroundColor: '#77B7E4' }}>
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left transition-all hover:shadow-xl" style={{ backgroundColor: '#77B7E4' }}>
                 <div className="p-6 sm:p-7 lg:p-8">
                   <Heart className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-white mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Companionship</h3>
-                  <p className="text-xs sm:text-sm text-white/90">
-                    Emotional support and social interaction to combat loneliness, 
-                    with engaging activities and meaningful conversations.
-                  </p>
+                  <p className="text-xs sm:text-sm text-white/90">Emotional support and social interaction to combat loneliness, with engaging activities and meaningful conversations.</p>
                 </div>
-                <div className="relative h-48">
-                  <Image src="/images/companionship.jpg" alt="Companionship" fill className="object-cover" />
-                </div>
+                <img src="/images/companionship.jpg" alt="Companionship" className="w-full h-48 object-cover" />
               </div>
             </Link>
 
-            {/* Card 4: Child Care - Sky Blue #91CBF1 */}
+            {/* Card 4: Child Care */}
             <Link href="/care/booking" className="group">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left h-full transition-all hover:shadow-xl" style={{ backgroundColor: '#91CBF1' }}>
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left transition-all hover:shadow-xl" style={{ backgroundColor: '#91CBF1' }}>
                 <div className="p-6 sm:p-7 lg:p-8">
                   <Baby className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-gray-800 mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Child Care</h3>
-                  <p className="text-xs sm:text-sm text-gray-700">
-                    Qualified caregivers for children with special needs or requiring 
-                    additional support, ensuring safety and development.
-                  </p>
+                  <p className="text-xs sm:text-sm text-gray-700">Qualified caregivers for children with special needs or requiring additional support, ensuring safety and development.</p>
                 </div>
-                <div className="relative h-48">
-                  <Image src="/images/child-care.jpg" alt="Child Care" fill className="object-cover" />
-                </div>
+                <img src="/images/child-care.jpg" alt="Child Care" className="w-full h-48 object-cover" />
               </div>
             </Link>
 
-            {/* Card 5: Personal Assistance - Icy Blue #A9D8F5 */}
+            {/* Card 5: Personal Assistance */}
             <Link href="/care/booking" className="group">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left h-full transition-all hover:shadow-xl" style={{ backgroundColor: '#A9D8F5' }}>
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left transition-all hover:shadow-xl" style={{ backgroundColor: '#A9D8F5' }}>
                 <div className="p-6 sm:p-7 lg:p-8">
                   <CheckCircle2 className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-gray-800 mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Personal Assistance</h3>
-                  <p className="text-xs sm:text-sm text-gray-700">
-                    Help with daily tasks, errands, transportation, and personal care 
-                    to maintain independence and quality of life.
-                  </p>
+                  <p className="text-xs sm:text-sm text-gray-700">Help with daily tasks, errands, transportation, and personal care to maintain independence and quality of life.</p>
                 </div>
-                <div className="relative h-48">
-                  <Image src="/images/personal-assistance.webp" alt="Personal Assistance" fill className="object-cover" />
-                </div>
+                <img src="/images/personal-assistance.webp" alt="Personal Assistance" className="w-full h-48 object-cover" />
               </div>
             </Link>
 
-            {/* Card 6: Post Hospital Recovery - Pale Sky #C1E4F8 (Lightest) */}
+            {/* Card 6: Post Hospital Recovery */}
             <Link href="/care/booking" className="group">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left h-full transition-all hover:shadow-xl" style={{ backgroundColor: '#C1E4F8' }}>
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden text-left transition-all hover:shadow-xl" style={{ backgroundColor: '#C1E4F8' }}>
                 <div className="p-6 sm:p-7 lg:p-8">
                   <Clock className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-gray-800 mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Post Hospital Recovery</h3>
-                  <p className="text-xs sm:text-sm text-gray-700">
-                    Specialized post-surgical and recovery care at home with medical 
-                    monitoring and rehabilitation support.
-                  </p>
+                  <p className="text-xs sm:text-sm text-gray-700">Specialized post-surgical and recovery care at home with medical monitoring and rehabilitation support.</p>
                 </div>
-                <div className="relative h-48">
-                  <Image src="/images/post-hospital-recovery.jpg" alt="Post Hospital Recovery" fill className="object-cover" />
-                </div>
+                <img src="/images/post-hospital-recovery.jpg" alt="Post Hospital Recovery" className="w-full h-48 object-cover" />
               </div>
             </Link>
           </div>
