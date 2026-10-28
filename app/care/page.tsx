@@ -7,7 +7,7 @@ import FooterSection from '@/components/footer';
 const serviceImages: Record<string, string> = {
   'Elderly Care': '/images/elderly-care.jpg',
   'Home Care': '/images/home-care.jpg',
-  'Companionship': '/images/companionship.jpg',
+  'Companionship': '/images/Companionship.jpg',
   'Child Care': '/images/child-care.jpg',
   'Personal Assistance': '/images/personal-assistance.webp',
   'Post Hospital Recovery': '/images/post-hospital-recovery.jpg',

@@ -313,7 +313,7 @@ export default function Home() {
                   <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Companionship</h3>
                   <p className="text-xs sm:text-sm text-white/90">Emotional support and social interaction to combat loneliness, with engaging activities and meaningful conversations.</p>
                 </div>
-                <img src="/images/companionship.jpg" alt="Companionship" className="w-full h-48 object-cover" />
+                <img src="/images/Companionship.jpg" alt="Companionship" className="w-full h-48 object-cover" />
               </div>
             </Link>
 
